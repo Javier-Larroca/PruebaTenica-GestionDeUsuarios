@@ -73,7 +73,10 @@ namespace DataAccessLayer
 
             try
             {
-                if (!isReaderr) this.command.ExecuteNonQuery();
+                if (!isReaderr)
+                { 
+                    this.command.ExecuteNonQuery(); 
+                }
                 else
                 {
                     this.reader = this.command.ExecuteReader();

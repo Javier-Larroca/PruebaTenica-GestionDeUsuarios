@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace UserIntefaces
+namespace UserInterfaces
 {
     public partial class Contact : Page
     {

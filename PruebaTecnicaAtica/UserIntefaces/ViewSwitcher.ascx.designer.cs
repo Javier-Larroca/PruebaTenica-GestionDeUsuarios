@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UserIntefaces {
+namespace UserInterfaces {
     
     
     public partial class ViewSwitcher {

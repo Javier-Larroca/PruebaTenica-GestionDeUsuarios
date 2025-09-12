@@ -43,5 +43,29 @@ namespace DataAccessLayer
                 this.connection.closeConnection();
             }
         }
+
+        public bool createUser(User user)
+        {
+            try
+            {
+                this.connection.setStoredProcedure("sp_InsertUsers");
+                this.connection.addParameter("@Email", user.Email);
+                this.connection.addParameter("@FirstName", user.FirstName);
+                this.connection.addParameter("@LastName", user.LastName);
+                this.connection.addParameter("@PasswordHash", user.PasswordHash);
+                this.connection.addParameter("@PasswordSalt", user.PasswordSalt);
+                this.connection.executeStoredProcedure();
+                this.connection.cleanParameters();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                this.connection.closeConnection();
+            }
+        }
     }
 }

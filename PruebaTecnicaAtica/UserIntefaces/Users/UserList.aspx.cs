@@ -3,7 +3,7 @@ using Entities;
 using System;
 using System.Collections.Generic;
 
-namespace UserIntefaces
+namespace UserInterfaces.Users
 {
     public partial class UserList : System.Web.UI.Page
     {
@@ -21,7 +21,6 @@ namespace UserIntefaces
             {
                 Response.Redirect("Default");
             }
-
         }
     }
 }

@@ -8,7 +8,7 @@ Use UsersAdministration_DB
 GO
 CREATE TABLE Users(
 	Id int Primary Key Identity(1,1),
-	Email varchar(100) Not null,
+	Email varchar(100) unique Not null,
     PasswordHash varbinary(256) Not null,
     PasswordSalt varbinary(128) Not null,
 	FirstName varchar(100) Not null,
@@ -19,7 +19,7 @@ CREATE TABLE Users(
 )
 
 GO
-CREATE PROCEDURE sp_GetUsers
+CREATE PROCEDURE sp_GetActiveUsers
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -32,12 +32,14 @@ BEGIN
         ConfirmedEmail,
         Active,
         Creation
-    FROM Users WITH (NOLOCK);
+    FROM Users 
+	WHERE Active = 1
+	WITH (NOLOCK);
 END
 GO
 
 CREATE PROCEDURE sp_InsertUsers
-    @Email NVARCHAR(320),
+    @Email NVARCHAR(100),
     @PasswordHash VARBINARY(256),
     @PasswordSalt VARBINARY(128),
     @FirstName NVARCHAR(100),
