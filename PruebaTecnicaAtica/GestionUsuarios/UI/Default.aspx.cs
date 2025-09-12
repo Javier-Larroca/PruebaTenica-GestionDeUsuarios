@@ -1,14 +1,9 @@
 ﻿using GestionUsuarios.BLL;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
-namespace GestionUsuarios
+namespace GestionUsuarios.UI
 {
-    public partial class _Default : Page
+    public partial class Default : System.Web.UI.Page
     {
         private readonly UserBLL userBLL = new UserBLL();
 
