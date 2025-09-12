@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GestionUsuarios
+namespace UseInterfaces
 {
 
 
