@@ -12,31 +12,47 @@ namespace UserInterfaces
     public partial class Login : System.Web.UI.Page
     {
         UserBLL business = new UserBLL();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            ErrorActivo.Visible = false;
+            ErrorLogueo.Visible = false;
         }
 
         protected void Ingresar_Click(object sender, EventArgs e)
         {
             try
             {
-                //User logueado = negocio.existeUsuario(Email.Text);
+                var user = business.Login(email.Text, password.Text);
 
-                //if (logueado.Id == 0)
-                //{
-                //    ErrorLogueo.Visible = true;
-                //}
-                //else
-                //{
-                //    Session.Add("UsuarioLogueado", logueado);
-                //    Response.Redirect("Inicio", false);
-                //}
+                if (user != null)
+                {
+                    if (user.Active)
+                    {
+                        Session.Add("UsuarioLogueado", user);
+                        Response.Redirect("Inicio", false);
+                    }
+                    else
+                    {
+                        //Uusuario no activo
+                        ErrorActivo.Visible = true;
+                    }
+                }
+                else
+                {
+                    //Error de logueo
+                    ErrorLogueo.Visible = true;
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+        protected void Register_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Users/UserRegister", false);
         }
     }
 }

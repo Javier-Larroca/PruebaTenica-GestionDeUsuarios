@@ -22,6 +22,20 @@ namespace BusinessLogicLayer
             return userDAL.createUser(user);
         }
 
+        public User Login(string email, string password)
+        {
+            var user = this.userDAL.GetUserByEmail(email);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            bool valid = VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
+
+            return valid ? user : null;
+        }
+
         private void CreatePasswordHash(User user)
         {
             using (var hmac = new HMACSHA256())

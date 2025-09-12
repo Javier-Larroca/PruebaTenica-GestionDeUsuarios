@@ -15,22 +15,22 @@ namespace UserInterfaces
     {
 
         /// <summary>
-        /// Email control.
+        /// email control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Email;
+        protected global::System.Web.UI.WebControls.TextBox email;
 
         /// <summary>
-        /// Password control.
+        /// password control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Password;
+        protected global::System.Web.UI.WebControls.TextBox password;
 
         /// <summary>
         /// Ingresar control.
@@ -42,6 +42,15 @@ namespace UserInterfaces
         protected global::System.Web.UI.WebControls.Button Ingresar;
 
         /// <summary>
+        /// Register control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Register;
+
+        /// <summary>
         /// ErrorLogueo control.
         /// </summary>
         /// <remarks>
@@ -49,5 +58,14 @@ namespace UserInterfaces
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ErrorLogueo;
+
+        /// <summary>
+        /// ErrorActivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ErrorActivo;
     }
 }
