@@ -1,33 +1,93 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 namespace GestionUsuarios.DAL
 {
-    public static class ConnectionDB
+    public class ConnectionDB
     {
-        private static string connectionString =
-            "Data Source=localhost;Initial Catalog=UsersAdministration_DB;Integrated Security=True;";
+        private static string connectionString = ConfigurationManager.ConnectionStrings["MyConexion"].ConnectionString;
+        private SqlConnection conection;
+        private SqlCommand command;
+        private SqlDataReader reader;
 
-        public static DataTable EjecutarStoredProcedure(string nombreSP, params SqlParameter[] parametros)
+        public ConnectionDB()
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(nombreSP, conn))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                if (parametros != null)
-                    cmd.Parameters.AddRange(parametros);
+            this.conection = new SqlConnection(connectionString);
+            this.command = new SqlCommand();
+        }
 
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+        public void setQuery(string consulta)
+        {
+            this.command.CommandType = System.Data.CommandType.Text;
+            this.command.CommandText = consulta;
+        }
+
+        public void addParameter(string nombre, object valor)
+        {
+            this.command.Parameters.AddWithValue(nombre, valor);
+        }
+
+        public void executeReader()
+        {
+            this.command.Connection = this.conection;
+            this.conection.Open();
+            this.reader = this.command.ExecuteReader();
+        }
+
+        public void closeConnection()
+        {
+            if (this.reader != null)
+            {
+                this.reader.Close();
+            }
+            this.conection.Close();
+        }
+
+        public SqlDataReader Reader
+        {
+            get { return this.reader; }
+        }
+
+        internal void executeAction()
+        {
+            this.command.Connection = this.conection;
+            this.conection.Open();
+            this.command.ExecuteNonQuery();
+        }
+
+        public void setStoredProcedure(string storedPocedure)
+        {
+            this.command.CommandType = CommandType.StoredProcedure;
+            this.command.CommandText = storedPocedure;
+        }
+
+        internal void executeStoredProcedure(bool isReaderr = false)
+        {
+            this.command.Connection = this.conection;
+
+            if (this.conection.State == ConnectionState.Closed)
+            {
+                this.conection.Open();
+            }
+
+            try
+            {
+                if (!isReaderr) this.command.ExecuteNonQuery();
+                else
                 {
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    return dt;
+                    this.reader = this.command.ExecuteReader();
                 }
             }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void cleanParameters()
+        {
+            this.command.Parameters.Clear();
         }
     }
 }
