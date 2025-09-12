@@ -1,8 +1,8 @@
-﻿using GestionUsuarios.DAL;
-using GestionUsuarios.Entities;
+﻿using DataAccessLayer;
+using Entities;
 using System.Collections.Generic;
 
-namespace GestionUsuarios.BLL
+namespace BusinessLogicLayer
 {
     public class UserBLL
     {

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GestionUsuarios.UI
+namespace UserInterfaces
 {
 
 

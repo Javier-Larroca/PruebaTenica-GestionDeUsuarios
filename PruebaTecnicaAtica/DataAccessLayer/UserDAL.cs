@@ -1,8 +1,8 @@
-﻿using GestionUsuarios.Entities;
+﻿using Entities;
 using System;
 using System.Collections.Generic;
 
-namespace GestionUsuarios.DAL
+namespace DataAccessLayer
 {
     public class UserDAL
     {

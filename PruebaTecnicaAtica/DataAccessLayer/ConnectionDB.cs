@@ -2,11 +2,11 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace GestionUsuarios.DAL
+namespace DataAccessLayer
 {
     public class ConnectionDB
     {
-        private static string connectionString = ConfigurationManager.ConnectionStrings["MyConexion"].ConnectionString;
+        private static string connectionString = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
         private SqlConnection conection;
         private SqlCommand command;
         private SqlDataReader reader;

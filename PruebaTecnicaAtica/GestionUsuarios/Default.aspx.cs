@@ -1,8 +1,8 @@
-﻿using GestionUsuarios.BLL;
+﻿using BusinessLogicLayer;
 using System;
 using System.Web.UI;
 
-namespace GestionUsuarios.UI
+namespace UserInterfaces
 {
     public partial class _Default : Page
     {
