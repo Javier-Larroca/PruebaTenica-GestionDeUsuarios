@@ -14,6 +14,7 @@ namespace UserInterfaces.Users
     public partial class UserCreate
     {
 
+
         /// <summary>
         /// firstName control.
         /// </summary>
@@ -42,22 +43,31 @@ namespace UserInterfaces.Users
         protected global::System.Web.UI.WebControls.TextBox email;
 
         /// <summary>
-        /// txtPassword control.
+        /// dayBirth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPassword;
+        protected global::System.Web.UI.WebControls.DropDownList dayBirth;
 
         /// <summary>
-        /// txtPasswordConfirm control.
+        /// monthBirth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPasswordConfirm;
+        protected global::System.Web.UI.WebControls.DropDownList monthBirth;
+
+        /// <summary>
+        /// yearBirth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList yearBirth;
 
         /// <summary>
         /// createUser control.

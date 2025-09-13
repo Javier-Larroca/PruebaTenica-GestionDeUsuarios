@@ -2,50 +2,95 @@
 using Entities;
 using System;
 using System.Collections.Generic;
+using System.Web.UI.WebControls;
 
 namespace UserInterfaces.Users
 {
     public partial class UserCreate : System.Web.UI.Page
     {
         private UserBLL business = new UserBLL();
-        private User user = new User();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            SuccessUser.Text = "Se agrego correctamente el usuario";
+            // Mostrar el navbar del master
+            SiteMaster master = (SiteMaster)this.Master;
+            master.ShowNavbar(true);
+
+            SuccessUser.Text = "Se agrego correctamente el usuario. Se le enviara un email con su contraseña.";
             FailUser.Text = "ATENCION: No se pudo cargar el usuario ";
+
+            if (!IsPostBack)
+            {
+                // Día
+                dayBirth.Items.Add(new ListItem("Día", ""));
+                for (int i = 1; i <= 31; i++)
+                {
+                    dayBirth.Items.Add(new ListItem(i.ToString(), i.ToString()));
+                }
+
+                // Mes
+                monthBirth.Items.Add(new ListItem("Mes", ""));
+                string[] meses = { "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic" };
+                for (int i = 0; i < meses.Length; i++)
+                {
+                    monthBirth.Items.Add(new ListItem(meses[i], (i + 1).ToString()));
+                }
+
+                // Año (ejemplo: 1990 hasta el año actual)
+                yearBirth.Items.Add(new ListItem("Año", ""));
+                int anioActual = DateTime.Now.Year;
+                for (int i = anioActual; i >= 1900; i--)
+                {
+                    yearBirth.Items.Add(new ListItem(i.ToString(), i.ToString()));
+                }
+            }
         }
 
         protected void createUser_Click(object sender, EventArgs e)
         {
+            User newUser = new User();
             try
             {
-                if (txtPassword.Text!= string.Empty && txtPassword.Text == txtPasswordConfirm.Text)
-                {
-                    user.FirstName = firstName.Text;
-                    user.LastName = lastName.Text;
-                    user.Email = email.Text;
-                    user.Password = txtPassword.Text;
+                int day, month, year;
 
-                    if (business.CreateUser(user))
-                    {
-                        SuccessUser.Visible = true;
-                    }
-                    else
-                    {
-                        FailUser.Visible = true;
-                    }
-                }
-                else 
+                if (int.TryParse(dayBirth.SelectedValue, out day) &&
+                    int.TryParse(monthBirth.SelectedValue, out month) &&
+                    int.TryParse(yearBirth.SelectedValue, out year))
                 {
-                    FailUser.Text = "ATENCION: No hay coincidencia en las contraseñas ";
+                    newUser.Birthdate = new DateTime(year, month, day);
+                }
+                else
+                {
+                    Warning.Text = "Debe seleccionar una fecha de nacimiento válida.";
+                    Warning.Visible = true;
+                    return;
+                }
+
+                newUser.FirstName = firstName.Text;
+                newUser.LastName = lastName.Text;
+                newUser.Email = email.Text;
+
+                if (business.CreateManualUser(newUser))
+                {
+                    SuccessUser.Visible = true;
+                    firstName.Text = "";
+                    lastName.Text = "";
+                    email.Text = "";
+                    dayBirth.SelectedIndex = 0;
+                    monthBirth.SelectedIndex = 0;
+                    yearBirth.SelectedIndex = 0;
+                }
+                else
+                {
                     FailUser.Visible = true;
                 }
             }
             catch (Exception)
             {
-                Warning.Visible = true;
+                FailUser.Visible = true;
+                throw;
             }
         }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Registrate" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserRegister.aspx.cs" Inherits="UserIntefaces.Users.UserRegister" %>
+﻿<%@ Page Title="Registrate" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserRegister.aspx.cs" Inherits="UserInterfaces.Users.UserRegister" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container-fluid vh-100 bg-light">
@@ -29,7 +29,6 @@
                         <!-- Título del formulario -->
                         <div class="text-center mb-4">
                             <h2 class="fw-bold text-dark mb-2">Crea una cuenta</h2>
-                            <p class="text-muted">Es rápido y fácil.</p>
                         </div>
 
                         <form id="registerForm">
@@ -52,98 +51,13 @@
                                 <label class="form-label">Fecha de nacimiento</label>
                                 <div class="row">
                                     <div class="col-4">
-                                        <asp:DropDownList CssClass="form-select" ID="dayBirth" runat="server">
-                                            <asp:ListItem Value="" Text="Día"></asp:ListItem>
-                                            <asp:ListItem Value="1" Text="1"></asp:ListItem>
-                                            <asp:ListItem Value="2" Text="2"></asp:ListItem>
-                                            <asp:ListItem Value="3" Text="3"></asp:ListItem>
-                                            <asp:ListItem Value="4" Text="4"></asp:ListItem>
-                                            <asp:ListItem Value="5" Text="5"></asp:ListItem>
-                                            <asp:ListItem Value="6" Text="6"></asp:ListItem>
-                                            <asp:ListItem Value="7" Text="7"></asp:ListItem>
-                                            <asp:ListItem Value="8" Text="8"></asp:ListItem>
-                                            <asp:ListItem Value="9" Text="9"></asp:ListItem>
-                                            <asp:ListItem Value="10" Text="10"></asp:ListItem>
-                                            <asp:ListItem Value="11" Text="11"></asp:ListItem>
-                                            <asp:ListItem Value="12" Text="12"></asp:ListItem>
-                                            <asp:ListItem Value="13" Text="13"></asp:ListItem>
-                                            <asp:ListItem Value="14" Text="14"></asp:ListItem>
-                                            <asp:ListItem Value="15" Text="15"></asp:ListItem>
-                                            <asp:ListItem Value="16" Text="16"></asp:ListItem>
-                                            <asp:ListItem Value="17" Text="17"></asp:ListItem>
-                                            <asp:ListItem Value="18" Text="18"></asp:ListItem>
-                                            <asp:ListItem Value="19" Text="19"></asp:ListItem>
-                                            <asp:ListItem Value="20" Text="20"></asp:ListItem>
-                                            <asp:ListItem Value="21" Text="21"></asp:ListItem>
-                                            <asp:ListItem Value="22" Text="22"></asp:ListItem>
-                                            <asp:ListItem Value="23" Text="23"></asp:ListItem>
-                                            <asp:ListItem Value="24" Text="24"></asp:ListItem>
-                                            <asp:ListItem Value="25" Text="25"></asp:ListItem>
-                                            <asp:ListItem Value="26" Text="26"></asp:ListItem>
-                                            <asp:ListItem Value="27" Text="27"></asp:ListItem>
-                                            <asp:ListItem Value="28" Text="28"></asp:ListItem>
-                                            <asp:ListItem Value="29" Text="29"></asp:ListItem>
-                                            <asp:ListItem Value="30" Text="30"></asp:ListItem>
-                                            <asp:ListItem Value="31" Text="31"></asp:ListItem>
-                                        </asp:DropDownList>
+                                        <asp:DropDownList CssClass="form-select" ID="dayBirth" runat="server" />
                                     </div>
                                     <div class="col-4">
-                                        <asp:DropDownList CssClass="form-select" ID="monthBirth" runat="server">
-                                            <asp:ListItem Value="" Text="Mes"></asp:ListItem>
-                                            <asp:ListItem Value="1" Text="ene"></asp:ListItem>
-                                            <asp:ListItem Value="2" Text="feb"></asp:ListItem>
-                                            <asp:ListItem Value="3" Text="mar"></asp:ListItem>
-                                            <asp:ListItem Value="4" Text="abr"></asp:ListItem>
-                                            <asp:ListItem Value="5" Text="may"></asp:ListItem>
-                                            <asp:ListItem Value="6" Text="jun"></asp:ListItem>
-                                            <asp:ListItem Value="7" Text="jul"></asp:ListItem>
-                                            <asp:ListItem Value="8" Text="ago"></asp:ListItem>
-                                            <asp:ListItem Value="9" Text="sep"></asp:ListItem>
-                                            <asp:ListItem Value="10" Text="oct"></asp:ListItem>
-                                            <asp:ListItem Value="11" Text="nov"></asp:ListItem>
-                                            <asp:ListItem Value="12" Text="dic"></asp:ListItem>
-                                        </asp:DropDownList>
+                                        <asp:DropDownList CssClass="form-select" ID="monthBirth" runat="server" />
                                     </div>
                                     <div class="col-4">
-                                        <asp:DropDownList CssClass="form-select" ID="yearBirth" runat="server">
-                                            <asp:ListItem Value="" Text="Año"></asp:ListItem>
-                                            <asp:ListItem Value="2025" Text="2025"></asp:ListItem>
-                                            <asp:ListItem Value="2024" Text="2024"></asp:ListItem>
-                                            <asp:ListItem Value="2023" Text="2023"></asp:ListItem>
-                                            <asp:ListItem Value="2022" Text="2022"></asp:ListItem>
-                                            <asp:ListItem Value="2021" Text="2021"></asp:ListItem>
-                                            <asp:ListItem Value="2020" Text="2020"></asp:ListItem>
-                                            <asp:ListItem Value="2019" Text="2019"></asp:ListItem>
-                                            <asp:ListItem Value="2018" Text="2018"></asp:ListItem>
-                                            <asp:ListItem Value="2017" Text="2017"></asp:ListItem>
-                                            <asp:ListItem Value="2016" Text="2016"></asp:ListItem>
-                                            <asp:ListItem Value="2015" Text="2015"></asp:ListItem>
-                                            <asp:ListItem Value="2014" Text="2014"></asp:ListItem>
-                                            <asp:ListItem Value="2013" Text="2013"></asp:ListItem>
-                                            <asp:ListItem Value="2012" Text="2012"></asp:ListItem>
-                                            <asp:ListItem Value="2011" Text="2011"></asp:ListItem>
-                                            <asp:ListItem Value="2010" Text="2010"></asp:ListItem>
-                                            <asp:ListItem Value="2009" Text="2009"></asp:ListItem>
-                                            <asp:ListItem Value="2008" Text="2008"></asp:ListItem>
-                                            <asp:ListItem Value="2007" Text="2007"></asp:ListItem>
-                                            <asp:ListItem Value="2006" Text="2006"></asp:ListItem>
-                                            <asp:ListItem Value="2005" Text="2005"></asp:ListItem>
-                                            <asp:ListItem Value="2004" Text="2004"></asp:ListItem>
-                                            <asp:ListItem Value="2003" Text="2003"></asp:ListItem>
-                                            <asp:ListItem Value="2002" Text="2002"></asp:ListItem>
-                                            <asp:ListItem Value="2001" Text="2001"></asp:ListItem>
-                                            <asp:ListItem Value="2000" Text="2000"></asp:ListItem>
-                                            <asp:ListItem Value="1999" Text="1999"></asp:ListItem>
-                                            <asp:ListItem Value="1998" Text="1998"></asp:ListItem>
-                                            <asp:ListItem Value="1997" Text="1997"></asp:ListItem>
-                                            <asp:ListItem Value="1996" Text="1996"></asp:ListItem>
-                                            <asp:ListItem Value="1995" Text="1995"></asp:ListItem>
-                                            <asp:ListItem Value="1994" Text="1994"></asp:ListItem>
-                                            <asp:ListItem Value="1993" Text="1993"></asp:ListItem>
-                                            <asp:ListItem Value="1992" Text="1992"></asp:ListItem>
-                                            <asp:ListItem Value="1991" Text="1991"></asp:ListItem>
-                                            <asp:ListItem Value="1990" Text="1990"></asp:ListItem>
-                                        </asp:DropDownList>
+                                        <asp:DropDownList CssClass="form-select" ID="yearBirth" runat="server" />
                                     </div>
                                 </div>
                             </div>

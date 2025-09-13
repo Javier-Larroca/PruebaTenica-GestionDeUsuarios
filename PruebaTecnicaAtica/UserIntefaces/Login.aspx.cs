@@ -1,11 +1,5 @@
 ﻿using BusinessLogicLayer;
-using Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace UserInterfaces
 {
@@ -15,7 +9,7 @@ namespace UserInterfaces
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ErrorActivo.Visible = false;
+            ErrorActive.Visible = false;
             ErrorLogueo.Visible = false;
         }
 
@@ -30,12 +24,12 @@ namespace UserInterfaces
                     if (user.Active)
                     {
                         Session.Add("UsuarioLogueado", user);
-                        Response.Redirect("Inicio", false);
+                        Response.Redirect("Users/UserHome", false);
                     }
                     else
                     {
                         //Uusuario no activo
-                        ErrorActivo.Visible = true;
+                        ErrorActive.Visible = true;
                     }
                 }
                 else

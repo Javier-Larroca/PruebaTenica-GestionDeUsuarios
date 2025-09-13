@@ -1,9 +1,7 @@
 ﻿using DataAccessLayer;
 using Entities;
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace BusinessLogicLayer
 {
@@ -16,41 +14,46 @@ namespace BusinessLogicLayer
             return userDAL.GetUsers();
         }
 
-        public bool CreateUser(User user)
+        public bool CreateUser(User user, string password)
         {
-            this.CreatePasswordHash(user);
+            PasswordBLL.CreatePasswordHash(user, password);
             return userDAL.createUser(user);
+        }
+
+        public bool CreateManualUser(User user)
+        {
+            string password = PasswordBLL.PasswordGenerate();
+
+            PasswordBLL.CreatePasswordHash(user, password);
+            try
+            {
+                //EmailBLL.SendEmailNewUser(user, password).GetAwaiter().GetResult(); ;
+                return userDAL.createUser(user); 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public User Login(string email, string password)
         {
-            var user = this.userDAL.GetUserByEmail(email);
+            try
+            {
+                var user = this.userDAL.GetUserByEmail(email);
 
-            if (user == null)
+                if (user == null)
+                {
+                    return null;
+                }
+
+                bool valid = PasswordBLL.VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
+
+                return valid ? user : null;
+            }
+            catch
             {
                 return null;
-            }
-
-            bool valid = VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
-
-            return valid ? user : null;
-        }
-
-        private void CreatePasswordHash(User user)
-        {
-            using (var hmac = new HMACSHA256())
-            {
-                user.PasswordSalt = hmac.Key;
-                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(user.Password));
-            }
-        }
-
-        private bool VerifyPassword(string password, byte[] storedHash, byte[] storedSalt)
-        {
-            using (var hmac = new HMACSHA256(storedSalt))
-            {
-                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return StructuralComparisons.StructuralEqualityComparer.Equals(computedHash, storedHash);
             }
         }
     }

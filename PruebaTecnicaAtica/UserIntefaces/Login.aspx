@@ -72,7 +72,7 @@
                                     Text="Usuario y/o contraseña ingersado incorecto" runat="server" Visible="false"></asp:Label>
                             </div>
                             <div class="mt-5 text-center">
-                                <asp:Label CssClass="alert alert-danger d-inline-block" ID="ErrorActivo"
+                                <asp:Label CssClass="alert alert-danger d-inline-block" ID="ErrorActive"
                                     Text="Usuario no activo" runat="server" Visible="false"></asp:Label>
                             </div>
                         </form>

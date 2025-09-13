@@ -25,7 +25,6 @@ namespace DataAccessLayer
                     user.FirstName = connection.Reader["FirstName"].ToString();
                     user.LastName = connection.Reader["LastName"].ToString();
                     user.Birthdate = (DateTime)connection.Reader["Birthdate"];
-                    user.ConfirmedEmail = (bool)connection.Reader["ConfirmedEmail"];
                     user.Active = (bool)connection.Reader["Active"];
                     user.Creation = (DateTime)connection.Reader["Creation"];
 
@@ -90,7 +89,6 @@ namespace DataAccessLayer
                         FirstName = connection.Reader["FirstName"].ToString(),
                         LastName = connection.Reader["LastName"].ToString(),
                         Birthdate = (DateTime)connection.Reader["Birthdate"],
-                        ConfirmedEmail = (bool)connection.Reader["ConfirmedEmail"],
                         Active = (bool)connection.Reader["Active"],
                         Creation = (DateTime)connection.Reader["Creation"]
                     };

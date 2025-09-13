@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UserIntefaces.Users
+namespace UserInterfaces.Users
 {
 
 
