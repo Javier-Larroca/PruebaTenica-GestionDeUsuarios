@@ -1,23 +1,70 @@
-# PruebaTenica-GestionDeUsuarios
-Repositorio generado para entrega de prueba técnica ASP.NET WebForms - Atica SRL
+# Prueba Técnica - Gestión de Usuarios
 
-Los requerimientos de este desarrollo se encuentran en "PruebaTecnica_ATICA.pdf"
+Repositorio generado como entrega de prueba técnica **ASP.NET WebForms - Atica SRL**.
 
-Antes de ejecutar la aplicación se debe ejecutar "ScriptDatabase.sql"
+Los requerimientos de este desarrollo se encuentran en el archivo **`PruebaTecnica_ATICA.pdf`**.
 
-Luego se debe configurar en "Web.config" el connectionString según corresponda con al servidor en el cual se haya generado la bbdd.
+---
 
--Una vez realizados los pasos anteriores, se podra ejecutar la aplicación.
+## Puesta en marcha
 
--Se podrá ingresar con el usuario administrador, mail: "admin@mail.com" contraseña: "adminadmin"
+1. **Ejecutar el script de base de datos**  
+   Antes de correr la aplicación, ejecutar el archivo **`ScriptDatabase.sql`** en tu servidor SQL.
 
--En caso de desearlo, se puede registrar un nuevo ususario sin ingresar a la aplicación, para con ese mismo luego iniciar sesión.
+2. **Configurar la cadena de conexión**  
+   Editar el archivo **`Web.config`** y ajustar el `connectionString` con los datos de tu servidor.
 
--Una vez ya se haya ingresado, se ingresrá al "Home de usuarios" donde desde ahi podremos acceder a "Administrar ususarios" y "Crear ususarios"
+3. **Ejecutar la aplicación**  
+   Una vez realizados los pasos anteriores, la aplicación estará lista para ejecutarse.
 
--Desde "Administrar ususarios" podremos visualizar la lista de usuarios registrados y desde ahi podremos, habilitar y deshabilitar ususarios, eliminarlos y acceder a la edición de un ususario.
+---
 
--Desde "Crear ususarios" accederemos a un formulario en donde podremos generar un nuevo usuario, sin ingresar la contraseña del mismo. La misma se autogenerara y se enviara por mail.
-    -Todo. No se genero el servicio que enviará los emails.
+## Acceso
 
+- Usuario administrador preconfigurado:  
+  - **Email:** `admin@mail.com`  
+  - **Contraseña:** `adminadmin`
 
+- También se puede **registrar un nuevo usuario** desde la pantalla de registro sin necesidad de iniciar sesión.  
+  Posteriormente, se podrá acceder con ese usuario creado.
+
+---
+
+## Funcionalidades
+
+### Home de usuarios
+Al iniciar sesión se accede al **Home**, desde donde se puede navegar a:
+
+- **Administrar usuarios**  
+  - Listar usuarios registrados.  
+  - Habilitar o deshabilitar usuarios.  
+  - Acceder a la edición de un usuario.  
+  - Eliminar usuarios.  
+
+- **Crear usuarios**  
+  - Completar un formulario para crear un nuevo usuario.  
+  - La contraseña se **autogenera** y debería enviarse por correo electrónico.  
+  - *Nota:* El servicio de envío de emails aún no fue implementado.
+
+---
+
+## Estructura del proyecto
+
+- **`ScriptDatabase.sql`** → Script para generar la base de datos.  
+- **`Web.config`** → Archivo de configuración (connectionString).  
+- **`PruebaTecnica_ATICA.pdf`** → Documento con los requerimientos de la prueba técnica.  
+
+---
+
+## Tecnologías utilizadas
+
+- **ASP.NET WebForms (.NET Framework)**  
+- **SQL Server**  
+
+---
+
+## Notas
+
+- El servicio de envío de emails está pendiente de implementación.  
+
+---
