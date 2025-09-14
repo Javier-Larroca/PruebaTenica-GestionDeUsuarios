@@ -9,23 +9,26 @@
                     <h1 class="display-4 fw-bold text-dark mb-3">Javier Larroca</h1>
                     <h5 class="text-dark text-decoration-underline mb-4">Gestión de usuarios</h5>
 
-                    <div class="bg-gradient bg-dark rounded-3 d-inline-flex align-items-center justify-content-center"
-                        style="width: 120px; height: 120px; background: linear-gradient(180deg, #6c757d 0%, #000000 100%);">
-                        <div class="text-white fw-bold" style="font-size: 2rem;">
-                            <div class="d-flex">
-                                <span class="me-2">J</span>
-                                <span>L</span>
+                    <a href="https://www.javierlarroca.com.ar" target="_blank">
+
+                        <div class="bg-gradient bg-dark rounded-3 d-inline-flex align-items-center justify-content-center"
+                            style="width: 120px; height: 120px; background: linear-gradient(180deg, #6c757d 0%, #000000 100%);">
+                            <div class="text-white fw-bold" style="font-size: 2rem;">
+                                <div class="d-flex">
+                                    <span class="me-2">J</span>
+                                    <span>L</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
             <div class="col-md-6 d-flex justify-content-center align-items-center bg-light">
                 <div class="row g-4 w-100">
                     <div class="col-12">
-                        <div class="card shadow-lg border-0 h-100" style="min-height: 200px; cursor: pointer;" 
-                             onclick="window.location.href='UserCreate.aspx'">
+                        <div class="card shadow-lg border-0 h-100" style="min-height: 200px; cursor: pointer;"
+                            onclick="window.location.href='UserCreate.aspx'">
                             <div class="card-body d-flex flex-column justify-content-center align-items-center p-5">
                                 <div class="text-center">
                                     <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
@@ -40,8 +43,8 @@
                     </div>
 
                     <div class="col-12">
-                        <div class="card shadow-lg border-0 h-100" style="min-height: 200px; cursor: pointer;" 
-                             onclick="window.location.href='UserList.aspx'">
+                        <div class="card shadow-lg border-0 h-100" style="min-height: 200px; cursor: pointer;"
+                            onclick="window.location.href='UserList.aspx'">
                             <div class="card-body d-flex flex-column justify-content-center align-items-center p-5">
                                 <div class="text-center">
                                     <div class="bg-secondary rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
@@ -63,12 +66,12 @@
         document.addEventListener('DOMContentLoaded', function () {
             const cards = document.querySelectorAll('.card[onclick]');
             cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
+                card.addEventListener('mouseenter', function () {
                     this.style.transform = 'translateY(-5px)';
                     this.style.transition = 'transform 0.3s ease';
                 });
-                
-                card.addEventListener('mouseleave', function() {
+
+                card.addEventListener('mouseleave', function () {
                     this.style.transform = 'translateY(0)';
                 });
             });

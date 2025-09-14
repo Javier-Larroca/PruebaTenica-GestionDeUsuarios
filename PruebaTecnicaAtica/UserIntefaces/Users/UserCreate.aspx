@@ -32,7 +32,6 @@
                                     <div class="invalid-feedback">El email es obligatorio</div>
                                 </div>
 
-                                <!-- Fecha de nacimiento -->
                                 <div class="mb-3">
                                     <label class="form-label fw-bold">Fecha de nacimiento</label>
                                     <div class="row">
@@ -53,7 +52,6 @@
                                 </div>
                             </form>
 
-                            <!-- Mensajes de alerta -->
                             <div class="mt-3">
                                 <asp:Label CssClass="alert alert-warning d-block" Visible="false" ID="Warning" runat="server" >
                                 </asp:Label>
@@ -76,14 +74,12 @@
         </div>
     </div>
 
-    <!-- Scripts para validación -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.querySelector('form');
             const requiredFields = document.querySelectorAll('.required-field');
             const submitButton = document.querySelector('#createUser');
 
-            // Función para validar un campo
             function validateField(field) {
                 const value = field.value.trim();
                 const isValid = value.length > 0;
@@ -99,7 +95,6 @@
                 return isValid;
             }
 
-            // Validación en tiempo real
             requiredFields.forEach(field => {
                 field.addEventListener('blur', function() {
                     validateField(this);
@@ -112,7 +107,6 @@
                 });
             });
 
-            // Validación al enviar el formulario
             if (submitButton) {
                 submitButton.addEventListener('click', function(e) {
                     let allValid = true;
@@ -125,7 +119,6 @@
 
                     if (!allValid) {
                         e.preventDefault();
-                        // Scroll al primer campo inválido
                         const firstInvalid = document.querySelector('.is-invalid');
                         if (firstInvalid) {
                             firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
