@@ -36,7 +36,7 @@
                     <!-- Información del usuario logueado -->
                     <div class="ms-4">
                         <span class="text-muted small">Bienvenido,</span>
-                        <asp:Label ID="lblUsuarioLogueado" CssClass="fw-bold text-dark ms-1" runat="server"></asp:Label>
+                        <asp:Label ID="lblLoggedUser" CssClass="fw-bold text-dark ms-1" runat="server"></asp:Label>
                     </div>
                 </div>
                 

@@ -79,7 +79,6 @@
         </div>
     </div>
 
-    <!-- Scripts para validación -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.querySelector('form');

@@ -13,14 +13,14 @@ namespace UserInterfaces
 
         private void LoadUserInfo()
         {
-            if (Session["UsuarioLogueado"] != null)
+            if (Session["LoggedUser"] != null)
             {
-                User usuarioLogueado = (User)Session["UsuarioLogueado"];
-                lblUsuarioLogueado.Text = $"{usuarioLogueado.FirstName} {usuarioLogueado.LastName}";
+                User LoggedUser = (User)Session["LoggedUser"];
+                lblLoggedUser.Text = $"{LoggedUser.FirstName} {LoggedUser.LastName}";
             }
             else
             {
-                lblUsuarioLogueado.Text = "Usuario";
+                lblLoggedUser.Text = "Usuario";
             }
         }
 

@@ -78,12 +78,12 @@ namespace UserInterfaces
         protected global::System.Web.UI.WebControls.Button btnCerrarSesion;
 
         /// <summary>
-        /// lblUsuarioLogueado control.
+        /// lblLoggedUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUsuarioLogueado;
+        protected global::System.Web.UI.WebControls.Label lblLoggedUser;
     }
 }

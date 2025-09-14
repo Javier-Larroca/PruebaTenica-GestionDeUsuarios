@@ -21,18 +21,16 @@ namespace UserInterfaces
                 {
                     if (user.Active)
                     {
-                        Session.Add("UsuarioLogueado", user);
+                        Session.Add("LoggedUser", user);
                         Response.Redirect("Users/UserHome", false);
                     }
                     else
                     {
-                        //Uusuario no activo
                         ErrorActive.Visible = true;
                     }
                 }
                 else
                 {
-                    //Error de logueo
                     ErrorLogueo.Visible = true;
                 }
             }

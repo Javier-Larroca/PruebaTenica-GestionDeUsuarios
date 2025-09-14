@@ -3,15 +3,12 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container-fluid vh-100 bg-light">
 
-        <!-- Contenido principal -->
         <div class="row h-100">
-            <!-- Sección del perfil (izquierda) -->
             <div class="col-md-6 d-flex flex-column justify-content-center align-items-center bg-light">
                 <div class="text-center">
                     <h1 class="display-4 fw-bold text-dark mb-3">Javier Larroca</h1>
                     <h5 class="text-dark text-decoration-underline mb-4">Gestión de usuarios</h5>
 
-                    <!-- Avatar con iniciales -->
                     <div class="bg-gradient bg-dark rounded-3 d-inline-flex align-items-center justify-content-center"
                         style="width: 120px; height: 120px; background: linear-gradient(180deg, #6c757d 0%, #000000 100%);">
                         <div class="text-white fw-bold" style="font-size: 2rem;">
@@ -24,10 +21,8 @@
                 </div>
             </div>
 
-            <!-- Sección de las cards (derecha) -->
             <div class="col-md-6 d-flex justify-content-center align-items-center bg-light">
                 <div class="row g-4 w-100">
-                    <!-- Card Crear Usuario -->
                     <div class="col-12">
                         <div class="card shadow-lg border-0 h-100" style="min-height: 200px; cursor: pointer;" 
                              onclick="window.location.href='UserCreate.aspx'">
@@ -44,7 +39,6 @@
                         </div>
                     </div>
 
-                    <!-- Card Administrar Usuario -->
                     <div class="col-12">
                         <div class="card shadow-lg border-0 h-100" style="min-height: 200px; cursor: pointer;" 
                              onclick="window.location.href='UserList.aspx'">
@@ -65,10 +59,8 @@
         </div>
     </div>
 
-    <!-- Scripts para efectos hover -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Agregar efectos hover a las cards
             const cards = document.querySelectorAll('.card[onclick]');
             cards.forEach(card => {
                 card.addEventListener('mouseenter', function() {
