@@ -5,25 +5,6 @@
 
         <!-- Contenido principal -->
         <div class="row h-100">
-            <!-- Sección del perfil (izquierda) -->
-            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center bg-light">
-                <div class="text-center">
-                    <h1 class="display-4 fw-bold text-dark mb-3">Javier Larroca</h1>
-                    <h5 class="text-dark text-decoration-underline mb-4">Gestión de usuarios</h5>
-
-                    <!-- Avatar con iniciales -->
-                    <div class="bg-gradient bg-dark rounded-3 d-inline-flex align-items-center justify-content-center"
-                        style="width: 120px; height: 120px; background: linear-gradient(180deg, #6c757d 0%, #000000 100%);">
-                        <div class="text-white fw-bold" style="font-size: 2rem;">
-                            <div class="d-flex">
-                                <span class="me-2">J</span>
-                                <span>L</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Sección del formulario (derecha) -->
             <div class="col-md-6 d-flex justify-content-center align-items-start bg-light pt-4">
                 <div class="w-100">
@@ -36,18 +17,21 @@
                         <div class="card-body p-4">
                             <form>
                                 <div class="mb-3">
-                                    <label class="form-label fw-bold">Nombre</label>
-                                    <asp:TextBox CssClass="form-control" ID="firstName" runat="server" placeholder="Ingrese el nombre"></asp:TextBox>
+                                    <label class="form-label fw-bold">Nombre <span class="text-danger">*</span></label>
+                                    <asp:TextBox CssClass="form-control required-field" ID="firstName" runat="server" placeholder="Ingrese el nombre"></asp:TextBox>
+                                    <div class="invalid-feedback">El nombre es obligatorio</div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label fw-bold">Apellido</label>
-                                    <asp:TextBox CssClass="form-control" ID="lastName" runat="server" placeholder="Ingrese el apellido"></asp:TextBox>
+                                    <label class="form-label fw-bold">Apellido <span class="text-danger">*</span></label>
+                                    <asp:TextBox CssClass="form-control required-field" ID="lastName" runat="server" placeholder="Ingrese el apellido"></asp:TextBox>
+                                    <div class="invalid-feedback">El apellido es obligatorio</div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label fw-bold">Email</label>
-                                    <asp:TextBox CssClass="form-control" type="email" ID="email" runat="server" placeholder="Ingrese el email"></asp:TextBox>
+                                    <label class="form-label fw-bold">Email <span class="text-danger">*</span></label>
+                                    <asp:TextBox CssClass="form-control required-field" type="email" ID="email" runat="server" placeholder="Ingrese el email"></asp:TextBox>
+                                    <div class="invalid-feedback">El email es obligatorio</div>
                                 </div>
 
                                 <!-- Fecha de nacimiento -->
@@ -93,4 +77,65 @@
             </div>
         </div>
     </div>
+
+    <!-- Scripts para validación -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            const requiredFields = document.querySelectorAll('.required-field');
+            const submitButton = document.querySelector('#createUser');
+
+            // Función para validar un campo
+            function validateField(field) {
+                const value = field.value.trim();
+                const isValid = value.length > 0;
+                
+                if (isValid) {
+                    field.classList.remove('is-invalid');
+                    field.classList.add('is-valid');
+                } else {
+                    field.classList.remove('is-valid');
+                    field.classList.add('is-invalid');
+                }
+                
+                return isValid;
+            }
+
+            // Validación en tiempo real
+            requiredFields.forEach(field => {
+                field.addEventListener('blur', function() {
+                    validateField(this);
+                });
+
+                field.addEventListener('input', function() {
+                    if (this.classList.contains('is-invalid')) {
+                        validateField(this);
+                    }
+                });
+            });
+
+            // Validación al enviar el formulario
+            if (submitButton) {
+                submitButton.addEventListener('click', function(e) {
+                    let allValid = true;
+                    
+                    requiredFields.forEach(field => {
+                        if (!validateField(field)) {
+                            allValid = false;
+                        }
+                    });
+
+                    if (!allValid) {
+                        e.preventDefault();
+                        // Scroll al primer campo inválido
+                        const firstInvalid = document.querySelector('.is-invalid');
+                        if (firstInvalid) {
+                            firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            firstInvalid.focus();
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </asp:Content>

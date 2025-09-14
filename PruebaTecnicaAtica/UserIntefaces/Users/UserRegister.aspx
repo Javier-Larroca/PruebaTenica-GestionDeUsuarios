@@ -3,24 +3,6 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container-fluid vh-100 bg-light">
         <div class="row h-100">
-            <!-- Sección del perfil (izquierda) -->
-            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center bg-light">
-                <div class="text-center">
-                    <h1 class="display-4 fw-bold text-dark mb-3">Javier Larroca</h1>
-                    <h5 class="text-dark text-decoration-underline mb-4">Gestión de usuarios</h5>
-
-                    <!-- Avatar con iniciales -->
-                    <div class="bg-gradient bg-dark rounded-3 d-inline-flex align-items-center justify-content-center"
-                        style="width: 120px; height: 120px; background: linear-gradient(180deg, #6c757d 0%, #000000 100%);">
-                        <div class="text-white fw-bold" style="font-size: 2rem;">
-                            <div class="d-flex">
-                                <span class="me-2">J</span>
-                                <span>L</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Sección del formulario (derecha) -->
             <div class="col-md-6 d-flex justify-content-center align-items-center bg-light">
@@ -35,14 +17,16 @@
                             <!-- Nombre y Apellido en la misma fila -->
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label class="form-label">Nombre</label>
-                                    <asp:TextBox CssClass="form-control" ID="firstName" runat="server"
+                                    <label class="form-label">Nombre <span class="text-danger">*</span></label>
+                                    <asp:TextBox CssClass="form-control required-field" ID="firstName" runat="server"
                                         placeholder="Nombre"></asp:TextBox>
+                                    <div class="invalid-feedback">El nombre es obligatorio</div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Apellido</label>
-                                    <asp:TextBox CssClass="form-control" ID="lastName" runat="server"
+                                    <label class="form-label">Apellido <span class="text-danger">*</span></label>
+                                    <asp:TextBox CssClass="form-control required-field" ID="lastName" runat="server"
                                         placeholder="Apellido"></asp:TextBox>
+                                    <div class="invalid-feedback">El apellido es obligatorio</div>
                                 </div>
                             </div>
 
@@ -64,9 +48,10 @@
 
                             <!-- Email -->
                             <div class="mb-3">
-                                <label class="form-label">Email</label>
-                                <asp:TextBox CssClass="form-control" type="email" ID="email" runat="server"
+                                <label class="form-label">Email <span class="text-danger">*</span></label>
+                                <asp:TextBox CssClass="form-control required-field" type="email" ID="email" runat="server"
                                     placeholder="correo electrónico"></asp:TextBox>
+                                <div class="invalid-feedback">El email es obligatorio</div>
                             </div>
 
                             <!-- Contraseña nueva -->
@@ -95,14 +80,13 @@
                             </div>
 
                             <!-- Mensajes de estado -->
-                            <div class="mt-4 text-center">
-                                <asp:Label CssClass="alert alert-warning d-inline-block" Visible="false" ID="Warning"
-                                    runat="server" Text="Debe completar todos los campos obligatorios"></asp:Label>
-                            </div>
-
                             <div class="mt-3 text-center">
                                 <asp:Label CssClass="alert alert-success d-inline-block" Visible="false" ID="SuccessUser"
                                     runat="server"></asp:Label>
+                            </div>
+                            <div class="mt-4 text-center">
+                                <asp:Label CssClass="alert alert-warning d-inline-block" Visible="false" ID="Warning"
+                                    runat="server" Text="Debe completar todos los campos obligatorios"></asp:Label>
                             </div>
 
                             <div class="mt-3 text-center">

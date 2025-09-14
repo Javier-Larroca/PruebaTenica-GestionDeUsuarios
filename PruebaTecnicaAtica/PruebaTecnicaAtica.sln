@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{F68FEA9F-5A1F-4E67-B5C3-AAE6B0BE45FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserIntefarces", "UserIntefaces\UserIntefarces.csproj", "{3163D50D-0FEA-4B23-B14C-B3420BB69498}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserInterfaces", "UserIntefaces\UserInterfaces.csproj", "{3163D50D-0FEA-4B23-B14C-B3420BB69498}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

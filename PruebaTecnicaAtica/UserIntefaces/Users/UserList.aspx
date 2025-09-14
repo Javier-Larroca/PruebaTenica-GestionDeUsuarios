@@ -6,28 +6,10 @@
     <div class="container-fluid vh-100 bg-light">
 
         <!-- Contenido principal -->
-        <div class="row h-100">
-            <!-- Sección del perfil (izquierda) -->
-            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center bg-light">
-                <div class="text-center">
-                    <h1 class="display-4 fw-bold text-dark mb-3">Javier Larroca</h1>
-                    <h5 class="text-dark text-decoration-underline mb-4">Gestión de usuarios</h5>
+        <div class="row h-100 justify-content-center">
 
-                    <!-- Avatar con iniciales -->
-                    <div class="bg-gradient bg-dark rounded-3 d-inline-flex align-items-center justify-content-center"
-                        style="width: 120px; height: 120px; background: linear-gradient(180deg, #6c757d 0%, #000000 100%);">
-                        <div class="text-white fw-bold" style="font-size: 2rem;">
-                            <div class="d-flex">
-                                <span class="me-2">J</span>
-                                <span>L</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sección de la tabla (derecha) -->
-            <div class="col-md-6 d-flex justify-content-center align-items-start bg-light pt-4">
+            <!-- Sección de la tabla (centrada) -->
+            <div class="col-md-10 col-lg-8 col-xl-6 d-flex justify-content-center align-items-start bg-light pt-4">
                 <div class="w-100">
                     <div class="card shadow-lg border-0">
                         <div class="card-header bg-primary text-white">
@@ -59,31 +41,52 @@
                                             <th scope="col" class="text-center">
                                                 <i class="fas fa-calendar me-1"></i>Creación
                                             </th>
+                                            <th scope="col" class="text-center">
+                                                <i class="fas fa-cogs me-1"></i>Acciones
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%if (listUsers != null && listUsers.Count > 0)
-                                            {
-                                                foreach (var user in listUsers)
-                                                { %>
-                                        <tr class="align-middle">
-                                            <td class="text-center fw-medium"><%=user.FirstName %></td>
-                                            <td class="text-center fw-medium"><%=user.LastName %></td>
-                                            <td class="text-center">
-                                                <span class="badge bg-light text-dark border">
-                                                    <%=user.Email %>
-                                                </span>
-                                            </td>
-                                            <td class="text-center text-muted">
-                                                <small><%=user.Creation %></small>
-                                            </td>
-                                        </tr>
-                                        <%}
-                                            }
-                                            else
-                                            { %>
-                                        <tr>
-                                            <td colspan="4" class="text-center text-muted py-5">
+                                        <asp:Repeater ID="rptUsers" runat="server" OnItemCommand="rptUsers_ItemCommand">
+                                            <ItemTemplate>
+                                                <tr class="align-middle">
+                                                    <td class="text-center fw-medium"><%# Eval("FirstName") %></td>
+                                                    <td class="text-center fw-medium"><%# Eval("LastName") %></td>
+                                                    <td class="text-center">
+                                                        <span class="badge bg-light text-dark border">
+                                                            <%# Eval("Email") %>
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-center text-muted">
+                                                        <small><%# Eval("Creation", "{0:dd/MM/yyyy}") %></small>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="btn-group" role="group">
+                                                            <asp:Button ID="btnModify" runat="server" 
+                                                                Text="Modificar" 
+                                                                CssClass="btn btn-warning btn-sm me-1"
+                                                                CommandName="ModifyUser"
+                                                                CommandArgument='<%# Eval("Id") %>'
+                                                                OnClientClick="return confirm('¿Deseas modificar este usuario?');" />
+                                                            <asp:Button ID="btnDisable" runat="server" 
+                                                                Text="Deshabilitar" 
+                                                                CssClass="btn btn-secondary btn-sm me-1"
+                                                                CommandName="DisableUser"
+                                                                CommandArgument='<%# Eval("Id") %>'
+                                                                OnClientClick="return confirm('¿Estás seguro de que deseas deshabilitar este usuario?');" />
+                                                            <asp:Button ID="btnDelete" runat="server" 
+                                                                Text="Eliminar" 
+                                                                CssClass="btn btn-danger btn-sm"
+                                                                CommandName="DeleteUser"
+                                                                CommandArgument='<%# Eval("Id") %>'
+                                                                OnClientClick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');" />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+                                        <tr runat="server" id="trNoUsers" visible="false">
+                                            <td colspan="5" class="text-center text-muted py-5">
                                                 <div class="d-flex flex-column align-items-center">
                                                     <i class="fas fa-users fa-3x text-muted mb-3"></i>
                                                     <h5 class="text-muted mb-2">No hay usuarios registrados</h5>
@@ -91,7 +94,6 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <%} %>
                                     </tbody>
                                 </table>
                             </div>

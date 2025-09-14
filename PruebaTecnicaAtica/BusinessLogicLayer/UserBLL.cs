@@ -36,6 +36,30 @@ namespace BusinessLogicLayer
             }
         }
 
+        public bool DeleteUser(int userId)
+        {
+            try
+            {
+                return userDAL.DeleteUser(userId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool DisableUser(int userId)
+        {
+            try
+            {
+                return userDAL.DisableUser(userId.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public User Login(string email, string password)
         {
             try

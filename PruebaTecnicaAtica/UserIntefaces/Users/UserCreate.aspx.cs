@@ -48,6 +48,33 @@ namespace UserInterfaces.Users
 
         protected void createUser_Click(object sender, EventArgs e)
         {
+            // Limpiar mensajes anteriores
+            Warning.Visible = false;
+            SuccessUser.Visible = false;
+            FailUser.Visible = false;
+
+            // Validar campos obligatorios
+            if (string.IsNullOrWhiteSpace(firstName.Text))
+            {
+                Warning.Text = "El nombre es obligatorio.";
+                Warning.Visible = true;
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(lastName.Text))
+            {
+                Warning.Text = "El apellido es obligatorio.";
+                Warning.Visible = true;
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(email.Text))
+            {
+                Warning.Text = "El email es obligatorio.";
+                Warning.Visible = true;
+                return;
+            }
+
             User newUser = new User();
             try
             {
@@ -66,9 +93,9 @@ namespace UserInterfaces.Users
                     return;
                 }
 
-                newUser.FirstName = firstName.Text;
-                newUser.LastName = lastName.Text;
-                newUser.Email = email.Text;
+                newUser.FirstName = firstName.Text.Trim();
+                newUser.LastName = lastName.Text.Trim();
+                newUser.Email = email.Text.Trim();
 
                 if (business.CreateManualUser(newUser))
                 {

@@ -69,7 +69,6 @@ namespace DataAccessLayer
             }
         }
 
-
         public User GetUserByEmail(string email)
         {
             try
@@ -100,6 +99,46 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 throw new Exception("Error al buscar usuario por email", ex);
+            }
+            finally
+            {
+                this.connection.cleanParameters();
+                this.connection.closeConnection();
+            }
+        }
+
+        public bool DeleteUser(int userId)
+        {
+            try
+            {
+                this.connection.setStoredProcedure("sp_DeleteUsers");
+                this.connection.addParameter("@Id", userId);
+                this.connection.executeStoredProcedure();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al eliminar usuario", ex);
+            }
+            finally
+            {
+                this.connection.cleanParameters();
+                this.connection.closeConnection();
+            }
+        }
+
+        public bool DisableUser(string userId)
+        {
+            try
+            {
+                this.connection.setStoredProcedure("sp_DisableUser");
+                this.connection.addParameter("@Id", userId);
+                this.connection.executeStoredProcedure();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al deshabilitar usuario", ex);
             }
             finally
             {
