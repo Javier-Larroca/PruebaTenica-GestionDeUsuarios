@@ -9,12 +9,10 @@ namespace UserInterfaces.Users
 {
     public partial class UserList : System.Web.UI.Page
     {
-        private UserBLL business;
         public List<User> listUsers = new List<User>();
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Mostrar el navbar del master
             SiteMaster master = (SiteMaster)this.Master;
             master.ShowNavbar(true);
 
@@ -28,8 +26,7 @@ namespace UserInterfaces.Users
         {
             try
             {
-                business = new UserBLL();
-                listUsers = business.GetUsers() ?? new List<User>();
+                listUsers = UserBLL.GetUsers() ?? new List<User>();
                 
                 if (listUsers.Count > 0)
                 {
@@ -57,76 +54,114 @@ namespace UserInterfaces.Users
             try
             {
                 string userId = e.CommandArgument?.ToString();
-                
-                if (string.IsNullOrEmpty(userId))
-                {
-                    ShowMessage("Error: No se pudo obtener el ID del usuario.", "error");
-                    return;
-                }
-
-                business = new UserBLL();
                 bool result = false;
                 string actionMessage = "";
+
+                System.Diagnostics.Debug.WriteLine($"rptUsers_ItemCommand: CommandName='{e.CommandName}', UserId='{userId}'");
 
                 switch (e.CommandName)
                 {
                     case "ModifyUser":
-                        // Redirigir a la página de modificación con el ID del usuario
-                        Response.Redirect($"UserCreate.aspx?action=modify&id={userId}");
+                        Response.Redirect($"UserModify.aspx?id={userId}");
                         return;
 
                     case "DisableUser":
-                        result = business.DisableUser(int.Parse(userId));
+                        result = UserBLL.DisableUser(userId);
                         actionMessage = result ? "Usuario deshabilitado correctamente." : "Error al deshabilitar el usuario.";
                         break;
 
-                    case "DeleteUser":
-                        result = business.DeleteUser(int.Parse(userId));
-                        actionMessage = result ? "Usuario eliminado correctamente." : "Error al eliminar el usuario.";
+                    case "EnableUser":
+                        result = UserBLL.EnableUser(userId);
+                        actionMessage = result ? "Usuario habilitado correctamente." : "Error al habilitar el usuario.";
                         break;
 
-                    default:
-                        ShowMessage("Acción no reconocida.", "error");
-                        return;
+                    case "DeleteUser":
+                        System.Diagnostics.Debug.WriteLine($"Eliminando usuario con ID: {userId}");
+                        result = UserBLL.DeleteUser(userId);
+                        System.Diagnostics.Debug.WriteLine($"Resultado de eliminación: {result}");
+                        actionMessage = result ? "Usuario eliminado correctamente." : "Error al eliminar el usuario.";
+                        break;
                 }
+
+                System.Diagnostics.Debug.WriteLine($"Resultado final: {result}, Mensaje: {actionMessage}");
 
                 if (result)
                 {
-                    ShowMessage(actionMessage, "success");
-                    // Recargar la lista de usuarios
                     LoadUsers();
+                    ShowMessage(actionMessage, true);
                 }
                 else
                 {
-                    ShowMessage(actionMessage, "error");
+                    ShowMessage(actionMessage, false);
                 }
+
+
             }
             catch (Exception ex)
             {
-                ShowMessage($"Error al procesar la acción: {ex.Message}", "error");
+                System.Diagnostics.Debug.WriteLine($"Excepción en rptUsers_ItemCommand: {ex.Message}");
+                ShowMessage($"Error inesperado: {ex.Message}", false);
             }
         }
 
-        private void ShowMessage(string message, string type)
+        private void ShowMessage(string message, bool isSuccess)
         {
-            string script = $@"
-                <script type='text/javascript'>
-                    $(document).ready(function() {{
-                        var alertClass = '{type}' === 'success' ? 'alert-success' : 'alert-danger';
-                        var alertHtml = '<div class=""alert "" + alertClass + "" alert-dismissible fade show"" role=""alert"">' +
-                                       '<strong>{(type == "success" ? "Éxito:" : "Error:")}</strong> {message}' +
-                                       '<button type=""button"" class=""btn-close"" data-bs-dismiss=""alert"" aria-label=""Close""></button>' +
-                                       '</div>';
-                        $('body').prepend(alertHtml);
-                        
-                        // Auto-hide after 5 seconds
-                        setTimeout(function() {{
-                            $('.alert').fadeOut();
-                        }}, 5000);
-                    }});
-                </script>";
+            System.Diagnostics.Debug.WriteLine($"ShowMessage llamado: '{message}', Success: {isSuccess}");
             
-            ClientScript.RegisterStartupScript(this.GetType(), "ShowMessage", script);
+            string alertType = isSuccess ? "success" : "danger";
+            string iconClass = isSuccess ? "fa-check-circle" : "fa-exclamation-circle";
+            string title = isSuccess ? "Éxito" : "Error";
+            
+            string script = $@"
+                // Crear el mensaje de alerta
+                const alertHtml = `
+                    <div class='alert alert-{alertType} alert-dismissible fade show' role='alert'>
+                        <i class='fas {iconClass} me-2'></i>
+                        <strong>{title}:</strong> {message}
+                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>
+                `;
+                
+                // Insertar el mensaje al inicio del contenedor principal
+                const container = document.querySelector('.card-body');
+                if (container) {{
+                    container.insertAdjacentHTML('afterbegin', alertHtml);
+                    
+                    // Scroll hacia arriba
+                    window.scrollTo({{ top: 0, behavior: 'smooth' }});
+                    
+                    // Auto-ocultar después de 5 segundos
+                    setTimeout(function() {{
+                        const alert = container.querySelector('.alert');
+                        if (alert) {{
+                            alert.style.transition = 'opacity 0.5s';
+                            alert.style.opacity = '0';
+                            setTimeout(function() {{
+                                alert.remove();
+                            }}, 500);
+                        }}
+                    }}, 5000);
+                }}
+            ";
+            
+            ScriptManager.RegisterStartupScript(this, GetType(), "showMessage", script, true);
+        }
+
+        public string GetConfirmMessage(bool isActive)
+        {
+            if (isActive)
+            {
+                return "confirm('¿Estás seguro de que deseas deshabilitar este usuario?');";
+            }
+            else
+            {
+                return "confirm('¿Estás seguro de que deseas habilitar este usuario?');";
+            }
+        }
+
+        public string GetFullName(object firstName, object lastName)
+        {
+            return firstName?.ToString() + " " + lastName?.ToString();
         }
     }
 }

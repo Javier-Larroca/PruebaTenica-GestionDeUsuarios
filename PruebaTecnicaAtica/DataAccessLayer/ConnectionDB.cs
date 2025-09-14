@@ -19,7 +19,7 @@ namespace DataAccessLayer
 
         public void setQuery(string consulta)
         {
-            this.command.CommandType = System.Data.CommandType.Text;
+            this.command.CommandType = CommandType.Text;
             this.command.CommandText = consulta;
         }
 

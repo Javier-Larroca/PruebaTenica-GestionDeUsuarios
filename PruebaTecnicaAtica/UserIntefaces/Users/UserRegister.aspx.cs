@@ -1,40 +1,16 @@
 ﻿using BusinessLogicLayer;
 using Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace UserInterfaces.Users
 {
     public partial class UserRegister : System.Web.UI.Page
     {
-        private UserBLL business = new UserBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                dayBirth.Items.Add(new ListItem("Día", ""));
-                for (int i = 1; i <= 31; i++)
-                {
-                    dayBirth.Items.Add(new ListItem(i.ToString(), i.ToString()));
-                }
-
-                monthBirth.Items.Add(new ListItem("Mes", ""));
-                string[] meses = { "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic" };
-                for (int i = 0; i < meses.Length; i++)
-                {
-                    monthBirth.Items.Add(new ListItem(meses[i], (i + 1).ToString()));
-                }
-
-                yearBirth.Items.Add(new ListItem("Año", ""));
-                int anioActual = DateTime.Now.Year;
-                for (int i = anioActual; i >= 1900; i--)
-                {
-                    yearBirth.Items.Add(new ListItem(i.ToString(), i.ToString()));
-                }
+                LoadBirthDateControls();
             }
         }
 
@@ -93,7 +69,7 @@ namespace UserInterfaces.Users
                 newUser.LastName = lastName.Text.Trim();
                 newUser.Email = email.Text.Trim();
 
-                if (business.CreateUser(newUser, txtPassword.Text))
+                if (UserBLL.CreateUser(newUser, txtPassword.Text))
                 {
                     Response.Redirect("../Login");
                 }
@@ -109,6 +85,33 @@ namespace UserInterfaces.Users
                 FailUser.Visible = true;
                 Warning.Text = ex.Message;
                 Warning.Visible = true;
+            }
+        }
+
+        private void LoadBirthDateControls()
+        {
+            dayBirth.Items.Clear();
+            dayBirth.Items.Add(new System.Web.UI.WebControls.ListItem("Día", ""));
+            for (int i = 1; i <= 31; i++)
+            {
+                dayBirth.Items.Add(new System.Web.UI.WebControls.ListItem(i.ToString(), i.ToString()));
+            }
+
+            monthBirth.Items.Clear();
+            monthBirth.Items.Add(new System.Web.UI.WebControls.ListItem("Mes", ""));
+            string[] months = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+            for (int i = 0; i < months.Length; i++)
+            {
+                monthBirth.Items.Add(new System.Web.UI.WebControls.ListItem(months[i], (i + 1).ToString()));
+            }
+
+            yearBirth.Items.Clear();
+            yearBirth.Items.Add(new System.Web.UI.WebControls.ListItem("Año", ""));
+            int currentYear = DateTime.Now.Year;
+            for (int i = currentYear; i >= 1900; i--)
+            {
+                yearBirth.Items.Add(new System.Web.UI.WebControls.ListItem(i.ToString(), i.ToString()));
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.UI;
+using Entities;
 
 namespace UserInterfaces
 {
@@ -7,7 +8,21 @@ namespace UserInterfaces
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Cargar información del usuario logueado si existe
+            LoadUserInfo();
+        }
 
+        private void LoadUserInfo()
+        {
+            if (Session["UsuarioLogueado"] != null)
+            {
+                User usuarioLogueado = (User)Session["UsuarioLogueado"];
+                lblUsuarioLogueado.Text = $"{usuarioLogueado.FirstName} {usuarioLogueado.LastName}";
+            }
+            else
+            {
+                lblUsuarioLogueado.Text = "Usuario";
+            }
         }
 
         protected void btnHome_Click(object sender, EventArgs e)

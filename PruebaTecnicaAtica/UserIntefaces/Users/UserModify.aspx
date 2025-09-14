@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Alta de Usuario" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserCreate.aspx.cs" Inherits="UserInterfaces.Users.UserCreate" %>
+﻿<%@ Page Title="Modificar Usuario" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserModify.aspx.cs" Inherits="UserInterfaces.Users.UserModify" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container-fluid vh-100 bg-light">
@@ -9,9 +9,9 @@
             <div class="col-md-10 col-lg-8 col-xl-6 d-flex justify-content-center align-items-start bg-light pt-4">
                 <div class="w-100">
                     <div class="card shadow-lg border-0">
-                        <div class="card-header bg-primary text-white">
+                        <div class="card-header bg-warning text-dark">
                             <h4 class="mb-0 text-center">
-                                <i class="fas fa-user-plus me-2"></i>Alta de Usuario
+                                <i class="fas fa-user-edit me-2"></i>Modificar Usuario
                             </h4>
                         </div>
                         <div class="card-body p-4">
@@ -50,8 +50,18 @@
                                     </div>
                                 </div>
 
+                                <!-- Estado del usuario -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Estado del usuario</label>
+                                    <asp:DropDownList CssClass="form-select" ID="ddlActive" runat="server">
+                                        <asp:ListItem Value="true" Text="Activo"></asp:ListItem>
+                                        <asp:ListItem Value="false" Text="Inactivo"></asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+
                                 <div class="d-grid gap-2">
-                                    <asp:Button CssClass="btn btn-primary btn-lg" Text="Crear Usuario" ID="createUser" OnClick="createUser_Click" runat="server" />
+                                    <asp:Button CssClass="btn btn-warning btn-lg" Text="Actualizar Usuario" ID="btnUpdate" OnClick="btnUpdate_Click" runat="server" />
+                                    <asp:Button CssClass="btn btn-secondary btn-lg" Text="Cancelar" ID="btnCancel" OnClick="btnCancel_Click" runat="server" CausesValidation="false" />
                                 </div>
                             </form>
 
@@ -61,10 +71,6 @@
                                 </asp:Label>
 
                                 <asp:Label CssClass="alert alert-success d-block" Visible="false" ID="SuccessUser" runat="server">
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </asp:Label>
-
-                                <asp:Label CssClass="alert alert-success d-block" Visible="false" ID="SuccessList" runat="server">
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </asp:Label>
 
@@ -83,7 +89,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.querySelector('form');
             const requiredFields = document.querySelectorAll('.required-field');
-            const submitButton = document.querySelector('#createUser');
+            const submitButton = document.querySelector('#btnUpdate');
 
             // Función para validar un campo
             function validateField(field) {

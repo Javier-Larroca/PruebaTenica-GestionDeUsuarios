@@ -5,8 +5,6 @@ namespace UserInterfaces
 {
     public partial class Login : System.Web.UI.Page
     {
-        UserBLL business = new UserBLL();
-
         protected void Page_Load(object sender, EventArgs e)
         {
             ErrorActive.Visible = false;
@@ -17,7 +15,7 @@ namespace UserInterfaces
         {
             try
             {
-                var user = business.Login(email.Text, password.Text);
+                var user = UserBLL.Login(email.Text, password.Text);
 
                 if (user != null)
                 {

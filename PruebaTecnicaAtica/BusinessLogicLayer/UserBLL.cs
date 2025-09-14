@@ -5,22 +5,32 @@ using System.Collections.Generic;
 
 namespace BusinessLogicLayer
 {
-    public class UserBLL
+    public static class UserBLL
     {
-        private readonly UserDAL userDAL = new UserDAL();
-
-        public List<User> GetUsers()
+        public static List<User> GetUsers()
         {
-            return userDAL.GetUsers();
+            return UserDAL.GetUsers();
         }
 
-        public bool CreateUser(User user, string password)
+        public static User GetUserById(int userId)
+        {
+            try
+            {
+                return UserDAL.GetUserById(userId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool CreateUser(User user, string password)
         {
             PasswordBLL.CreatePasswordHash(user, password);
-            return userDAL.createUser(user);
+            return UserDAL.createUser(user);
         }
 
-        public bool CreateManualUser(User user)
+        public static bool CreateManualUser(User user)
         {
             string password = PasswordBLL.PasswordGenerate();
 
@@ -28,7 +38,7 @@ namespace BusinessLogicLayer
             try
             {
                 //EmailBLL.SendEmailNewUser(user, password).GetAwaiter().GetResult(); ;
-                return userDAL.createUser(user); 
+                return UserDAL.createUser(user); 
             }
             catch (Exception ex)
             {
@@ -36,11 +46,11 @@ namespace BusinessLogicLayer
             }
         }
 
-        public bool DeleteUser(int userId)
+        public static bool DeleteUser(string userId)
         {
             try
             {
-                return userDAL.DeleteUser(userId);
+                return UserDAL.DeleteUser(userId);
             }
             catch (Exception ex)
             {
@@ -48,11 +58,11 @@ namespace BusinessLogicLayer
             }
         }
 
-        public bool DisableUser(int userId)
+        public static bool DisableUser(string userId)
         {
             try
             {
-                return userDAL.DisableUser(userId.ToString());
+                return UserDAL.DisableUser(userId);
             }
             catch (Exception ex)
             {
@@ -60,11 +70,35 @@ namespace BusinessLogicLayer
             }
         }
 
-        public User Login(string email, string password)
+        public static bool EnableUser(string userId)
         {
             try
             {
-                var user = this.userDAL.GetUserByEmail(email);
+                return UserDAL.EnableUser(userId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool UpdateUser(User user)
+        {
+            try
+            {
+                return UserDAL.UpdateUser(user);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static User Login(string email, string password)
+        {
+            try
+            {
+                var user = UserDAL.GetUserByEmail(email);
 
                 if (user == null)
                 {

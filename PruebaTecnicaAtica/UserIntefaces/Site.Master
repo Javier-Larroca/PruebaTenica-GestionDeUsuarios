@@ -32,9 +32,15 @@
                         </div>
                     </div>
                     <span class="fw-bold text-dark">Gestión de usuarios</span>
+                    
+                    <!-- Información del usuario logueado -->
+                    <div class="ms-4">
+                        <span class="text-muted small">Bienvenido,</span>
+                        <asp:Label ID="lblUsuarioLogueado" CssClass="fw-bold text-dark ms-1" runat="server"></asp:Label>
+                    </div>
                 </div>
                 
-                <div class="navbar-nav ms-auto">
+                <div class="navbar-nav ms-auto d-flex align-items-center">
                     <asp:Button ID="btnHome" CssClass="btn btn-outline-info me-2" 
                         Text="Home" OnClick="btnHome_Click" runat="server" />
 

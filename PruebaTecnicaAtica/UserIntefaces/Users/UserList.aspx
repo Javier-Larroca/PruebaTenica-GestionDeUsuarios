@@ -49,11 +49,13 @@
                                     <tbody>
                                         <asp:Repeater ID="rptUsers" runat="server" OnItemCommand="rptUsers_ItemCommand">
                                             <ItemTemplate>
-                                                <tr class="align-middle">
-                                                    <td class="text-center fw-medium"><%# Eval("FirstName") %></td>
+                                                <tr class="align-middle <%# (bool)Eval("Active") ? "" : "table-secondary opacity-75" %>">
+                                                    <td class="text-center fw-medium">
+                                                        <%# Eval("FirstName") %>
+                                                    </td>
                                                     <td class="text-center fw-medium"><%# Eval("LastName") %></td>
                                                     <td class="text-center">
-                                                        <span class="badge bg-light text-dark border">
+                                                        <span class="badge <%# (bool)Eval("Active") ? "bg-light text-dark border" : "bg-secondary text-light" %>">
                                                             <%# Eval("Email") %>
                                                         </span>
                                                     </td>
@@ -67,19 +69,20 @@
                                                                 CssClass="btn btn-warning btn-sm me-1"
                                                                 CommandName="ModifyUser"
                                                                 CommandArgument='<%# Eval("Id") %>'
+                                                                Enabled='<%# (bool)Eval("Active") %>'
                                                                 OnClientClick="return confirm('¿Deseas modificar este usuario?');" />
-                                                            <asp:Button ID="btnDisable" runat="server" 
-                                                                Text="Deshabilitar" 
-                                                                CssClass="btn btn-secondary btn-sm me-1"
-                                                                CommandName="DisableUser"
+                                                            <asp:Button ID="btnToggle" runat="server" 
+                                                                Text='<%# (bool)Eval("Active") ? "Deshabilitar" : "Habilitar" %>' 
+                                                                CssClass='<%# (bool)Eval("Active") ? "btn btn-secondary btn-sm me-1" : "btn btn-success btn-sm me-1" %>'
+                                                                CommandName='<%# (bool)Eval("Active") ? "DisableUser" : "EnableUser" %>'
                                                                 CommandArgument='<%# Eval("Id") %>'
-                                                                OnClientClick="return confirm('¿Estás seguro de que deseas deshabilitar este usuario?');" />
+                                                                OnClientClick="return confirm('¿Estás seguro de realizar esta acción?');" />
                                                             <asp:Button ID="btnDelete" runat="server" 
                                                                 Text="Eliminar" 
                                                                 CssClass="btn btn-danger btn-sm"
                                                                 CommandName="DeleteUser"
                                                                 CommandArgument='<%# Eval("Id") %>'
-                                                                OnClientClick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');" />
+                                                                OnClientClick="return confirm('¿Estás seguro de que deseas eliminar este usuario? Esta acción no se puede deshacer.');" />
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -99,8 +102,38 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Mensajes de alerta -->
+                    <div class="mt-3">
+                        <asp:Label CssClass="alert alert-success d-block" Visible="false" ID="SuccessMessage" runat="server">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </asp:Label>
+                        <asp:Label CssClass="alert alert-danger d-block" Visible="false" ID="ErrorMessage" runat="server">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </asp:Label>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Script mínimo para auto-ocultar alertas -->
+    <script>
+        // Auto-ocultar alertas después de 5 segundos
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    if (alert.style.display !== 'none') {
+                        alert.style.transition = 'opacity 0.5s';
+                        alert.style.opacity = '0';
+                        setTimeout(function() {
+                            alert.style.display = 'none';
+                        }, 500);
+                    }
+                }, 5000);
+            });
+        });
+    </script>
+
 </asp:Content>

@@ -178,6 +178,7 @@
     <Content Include="Users\UserCreate.aspx" />
     <Content Include="Users\UserHome.aspx" />
     <Content Include="Users\UserList.aspx" />
+    <Content Include="Users\UserModify.aspx" />
     <Content Include="Users\UserRegister.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -232,6 +233,13 @@
     </Compile>
     <Compile Include="Users\UserList.aspx.designer.cs">
       <DependentUpon>UserList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Users\UserModify.aspx.cs">
+      <DependentUpon>UserModify.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Users\UserModify.aspx.designer.cs">
+      <DependentUpon>UserModify.aspx</DependentUpon>
     </Compile>
     <Compile Include="Users\UserRegister.aspx.cs">
       <DependentUpon>UserRegister.aspx</DependentUpon>

@@ -1,18 +1,14 @@
 ﻿using BusinessLogicLayer;
 using Entities;
 using System;
-using System.Collections.Generic;
 using System.Web.UI.WebControls;
 
 namespace UserInterfaces.Users
 {
     public partial class UserCreate : System.Web.UI.Page
     {
-        private UserBLL business = new UserBLL();
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Mostrar el navbar del master
             SiteMaster master = (SiteMaster)this.Master;
             master.ShowNavbar(true);
 
@@ -21,39 +17,16 @@ namespace UserInterfaces.Users
 
             if (!IsPostBack)
             {
-                // Día
-                dayBirth.Items.Add(new ListItem("Día", ""));
-                for (int i = 1; i <= 31; i++)
-                {
-                    dayBirth.Items.Add(new ListItem(i.ToString(), i.ToString()));
-                }
-
-                // Mes
-                monthBirth.Items.Add(new ListItem("Mes", ""));
-                string[] meses = { "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic" };
-                for (int i = 0; i < meses.Length; i++)
-                {
-                    monthBirth.Items.Add(new ListItem(meses[i], (i + 1).ToString()));
-                }
-
-                // Año (ejemplo: 1990 hasta el año actual)
-                yearBirth.Items.Add(new ListItem("Año", ""));
-                int anioActual = DateTime.Now.Year;
-                for (int i = anioActual; i >= 1900; i--)
-                {
-                    yearBirth.Items.Add(new ListItem(i.ToString(), i.ToString()));
-                }
+                LoadBirthDateControls();
             }
         }
 
         protected void createUser_Click(object sender, EventArgs e)
         {
-            // Limpiar mensajes anteriores
             Warning.Visible = false;
             SuccessUser.Visible = false;
             FailUser.Visible = false;
 
-            // Validar campos obligatorios
             if (string.IsNullOrWhiteSpace(firstName.Text))
             {
                 Warning.Text = "El nombre es obligatorio.";
@@ -97,15 +70,12 @@ namespace UserInterfaces.Users
                 newUser.LastName = lastName.Text.Trim();
                 newUser.Email = email.Text.Trim();
 
-                if (business.CreateManualUser(newUser))
+                if (UserBLL.CreateManualUser(newUser))
                 {
                     SuccessUser.Visible = true;
                     firstName.Text = "";
                     lastName.Text = "";
                     email.Text = "";
-                    dayBirth.SelectedIndex = 0;
-                    monthBirth.SelectedIndex = 0;
-                    yearBirth.SelectedIndex = 0;
                 }
                 else
                 {
@@ -116,6 +86,33 @@ namespace UserInterfaces.Users
             {
                 FailUser.Visible = true;
                 throw;
+            }
+        }
+
+        private void LoadBirthDateControls()
+        {
+            dayBirth.Items.Clear();
+            dayBirth.Items.Add(new ListItem("Día", ""));
+            for (int i = 1; i <= 31; i++)
+            {
+                dayBirth.Items.Add(new ListItem(i.ToString(), i.ToString()));
+            }
+
+            monthBirth.Items.Clear();
+            monthBirth.Items.Add(new ListItem("Mes", ""));
+            string[] months = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+            for (int i = 0; i < months.Length; i++)
+            {
+                monthBirth.Items.Add(new ListItem(months[i], (i + 1).ToString()));
+            }
+
+            yearBirth.Items.Clear();
+            yearBirth.Items.Add(new ListItem("Año", ""));
+            int currentYear = DateTime.Now.Year;
+            for (int i = currentYear; i >= 1900; i--)
+            {
+                yearBirth.Items.Add(new ListItem(i.ToString(), i.ToString()));
             }
         }
 

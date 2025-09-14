@@ -60,15 +60,59 @@ END
 GO
 
 -- Crear procedimiento sp_DeleteUsers
-IF OBJECT_ID('sp_DeleteUsers', 'P') IS NOT NULL
-    DROP PROCEDURE sp_DeleteUsers;
+IF OBJECT_ID('sp_DeleteUser', 'P') IS NOT NULL
+    DROP PROCEDURE sp_DeleteUser;
 GO
-CREATE PROCEDURE sp_DeleteUsers
+CREATE PROCEDURE sp_DeleteUser
     @Id INT
 AS
 BEGIN
     SET NOCOUNT ON;
     DELETE FROM Users WHERE Id = @Id;
+END
+GO
+
+-- Crear procedimiento sp_DeleteUsers
+IF OBJECT_ID('sp_DisableUser', 'P') IS NOT NULL
+    DROP PROCEDURE sp_DisableUser;
+GO
+CREATE PROCEDURE sp_DisableUser
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE Users SET Active = 0 WHERE Id = @Id;
+END
+GO
+
+-- Crear procedimiento sp_DeleteUsers
+IF OBJECT_ID('sp_EnableUser', 'P') IS NOT NULL
+    DROP PROCEDURE sp_EnableUser;
+GO
+CREATE PROCEDURE sp_EnableUser
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE Users SET Active = 1 WHERE Id = @Id;
+END
+GO
+
+-- Crear procedimiento sp_UpdateUser
+IF OBJECT_ID('sp_UpdateUser', 'P') IS NOT NULL
+    DROP PROCEDURE sp_UpdateUser;
+GO
+CREATE PROCEDURE sp_UpdateUser
+    @Id INT,
+    @Email NVARCHAR(100),
+    @Birthdate DATE,
+    @Active BIT,
+    @FirstName NVARCHAR(100),
+    @LastName NVARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE Users SET Email = @Email, Birthdate = @Birthdate, Active = @Active, FirstName = @FirstName, LastName = @LastName WHERE Id = @Id;
 END
 GO
 
@@ -84,6 +128,21 @@ BEGIN
     SELECT TOP 1 Id, Email, Birthdate, PasswordHash, PasswordSalt, FirstName, LastName, Active, Creation
     FROM Users
     WHERE Email = @Email;
+END
+GO
+
+-- Crear procedimiento sp_GetUserById
+IF OBJECT_ID('sp_GetUserById', 'P') IS NOT NULL
+    DROP PROCEDURE sp_GetUserById;
+GO
+CREATE PROCEDURE sp_GetUserById
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT TOP 1 Id, Email, Birthdate, PasswordHash, PasswordSalt, FirstName, LastName, Active, Creation
+    FROM Users
+    WHERE Id = @Id;
 END
 GO
 
