@@ -82,10 +82,12 @@ namespace UserInterfaces.Users
                     FailUser.Visible = true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                FailUser.Text = "ATENCIÓN: Ocurrio un error al registrar el ususario. ";
                 FailUser.Visible = true;
-                throw;
+                Warning.Text = ex.Message;
+                Warning.Visible = true;
             }
         }
 

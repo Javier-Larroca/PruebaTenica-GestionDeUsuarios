@@ -53,6 +53,9 @@
                             </form>
 
                             <div class="mt-3">
+                                <asp:Label CssClass="alert alert-danger d-block" Visible="false" ID="FailUser" runat="server">
+                                </asp:Label>
+
                                 <asp:Label CssClass="alert alert-warning d-block" Visible="false" ID="Warning" runat="server" >
                                 </asp:Label>
 
@@ -64,8 +67,6 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </asp:Label>
 
-                                <asp:Label CssClass="alert alert-danger d-block" Visible="false" ID="FailUser" runat="server">
-                                </asp:Label>
                             </div>
                         </div>
                     </div>

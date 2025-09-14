@@ -14,7 +14,6 @@ namespace UserInterfaces.Users
     public partial class UserCreate
     {
 
-
         /// <summary>
         /// firstName control.
         /// </summary>
@@ -79,6 +78,15 @@ namespace UserInterfaces.Users
         protected global::System.Web.UI.WebControls.Button createUser;
 
         /// <summary>
+        /// FailUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label FailUser;
+
+        /// <summary>
         /// Warning control.
         /// </summary>
         /// <remarks>
@@ -104,14 +112,5 @@ namespace UserInterfaces.Users
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label SuccessList;
-
-        /// <summary>
-        /// FailUser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FailUser;
     }
 }
