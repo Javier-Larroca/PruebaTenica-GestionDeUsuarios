@@ -9,8 +9,11 @@
 
 namespace UserInterfaces.Users
 {
+
+
     public partial class UserModify
     {
+
         /// <summary>
         /// firstName control.
         /// </summary>
@@ -107,7 +110,7 @@ namespace UserInterfaces.Users
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
-        /// </summary>
+        /// </remarks>
         protected global::System.Web.UI.WebControls.Label SuccessUser;
 
         /// <summary>
@@ -116,7 +119,7 @@ namespace UserInterfaces.Users
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
-        /// </summary>
+        /// </remarks>
         protected global::System.Web.UI.WebControls.Label FailUser;
     }
 }

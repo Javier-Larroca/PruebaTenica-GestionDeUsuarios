@@ -158,10 +158,5 @@ namespace UserInterfaces.Users
                 return "confirm('¿Estás seguro de que deseas habilitar este usuario?');";
             }
         }
-
-        public string GetFullName(object firstName, object lastName)
-        {
-            return firstName?.ToString() + " " + lastName?.ToString();
-        }
     }
 }

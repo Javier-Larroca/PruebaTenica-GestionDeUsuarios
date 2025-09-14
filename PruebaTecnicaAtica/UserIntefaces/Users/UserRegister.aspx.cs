@@ -17,7 +17,6 @@ namespace UserInterfaces.Users
         protected void createUser_Click(object sender, EventArgs e)
         {
             Warning.Visible = false;
-            SuccessUser.Visible = false;
             FailUser.Visible = false;
 
             if (string.IsNullOrWhiteSpace(firstName.Text))

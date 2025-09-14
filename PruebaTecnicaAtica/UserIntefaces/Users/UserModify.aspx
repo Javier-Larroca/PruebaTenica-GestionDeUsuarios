@@ -3,9 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container-fluid vh-100 bg-light">
 
-        <!-- Contenido principal -->
         <div class="row h-100 justify-content-center">
-            <!-- Sección del formulario (centrada) -->
             <div class="col-md-10 col-lg-8 col-xl-6 d-flex justify-content-center align-items-start bg-light pt-4">
                 <div class="w-100">
                     <div class="card shadow-lg border-0">
@@ -34,7 +32,6 @@
                                     <div class="invalid-feedback">El email es obligatorio</div>
                                 </div>
 
-                                <!-- Fecha de nacimiento -->
                                 <div class="mb-3">
                                     <label class="form-label fw-bold">Fecha de nacimiento</label>
                                     <div class="row">
@@ -50,7 +47,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Estado del usuario -->
                                 <div class="mb-3">
                                     <label class="form-label fw-bold">Estado del usuario</label>
                                     <asp:DropDownList CssClass="form-select" ID="ddlActive" runat="server">
@@ -65,7 +61,6 @@
                                 </div>
                             </form>
 
-                            <!-- Mensajes de alerta -->
                             <div class="mt-3">
                                 <asp:Label CssClass="alert alert-warning d-block" Visible="false" ID="Warning" runat="server" >
                                 </asp:Label>
@@ -91,7 +86,6 @@
             const requiredFields = document.querySelectorAll('.required-field');
             const submitButton = document.querySelector('#btnUpdate');
 
-            // Función para validar un campo
             function validateField(field) {
                 const value = field.value.trim();
                 const isValid = value.length > 0;
@@ -107,7 +101,6 @@
                 return isValid;
             }
 
-            // Validación en tiempo real
             requiredFields.forEach(field => {
                 field.addEventListener('blur', function() {
                     validateField(this);
@@ -120,7 +113,6 @@
                 });
             });
 
-            // Validación al enviar el formulario
             if (submitButton) {
                 submitButton.addEventListener('click', function(e) {
                     let allValid = true;
@@ -133,7 +125,6 @@
 
                     if (!allValid) {
                         e.preventDefault();
-                        // Scroll al primer campo inválido
                         const firstInvalid = document.querySelector('.is-invalid');
                         if (firstInvalid) {
                             firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });

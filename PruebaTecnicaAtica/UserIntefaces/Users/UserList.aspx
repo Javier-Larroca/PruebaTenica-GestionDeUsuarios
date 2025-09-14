@@ -1,15 +1,14 @@
 ﻿<%@ Page Title="Listado de usuarios" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserList.aspx.cs" Inherits="UserInterfaces.Users.UserList" %>
+
 <%@ Import Namespace="System.Collections.Generic" %>
 <%@ Import Namespace="Entities" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container-fluid vh-100 bg-light">
 
-        <!-- Contenido principal -->
         <div class="row h-100 justify-content-center">
 
-            <!-- Sección de la tabla (centrada) -->
-            <div class="col-md-10 col-lg-8 col-xl-6 d-flex justify-content-center align-items-start bg-light pt-4">
+            <div class="col-md-10 col-lg-8 col-xl-7 d-flex justify-content-center align-items-start bg-light pt-4">
                 <div class="w-100">
                     <div class="card shadow-lg border-0">
                         <div class="card-header bg-primary text-white">
@@ -17,7 +16,8 @@
                                 <h4 class="mb-0">
                                     <i class="fas fa-users me-2"></i>Lista de Usuarios
                                 </h4>
-                                <%if (listUsers != null && listUsers.Count > 0) { %>
+                                <%if (listUsers != null && listUsers.Count > 0)
+                                    { %>
                                 <span class="badge bg-light text-primary fs-6">
                                     <i class="fas fa-user-check me-1"></i><%=listUsers.Count %> usuario(s)
                                 </span>
@@ -34,6 +34,9 @@
                                             </th>
                                             <th scope="col" class="text-center">
                                                 <i class="fas fa-user me-1"></i>Apellido
+                                            </th>
+                                            <th scope="col" class="text-center">
+                                                <i class="fas fa-calendar me-1"></i>Nacimiento
                                             </th>
                                             <th scope="col" class="text-center">
                                                 <i class="fas fa-envelope me-1"></i>Email
@@ -54,6 +57,9 @@
                                                         <%# Eval("FirstName") %>
                                                     </td>
                                                     <td class="text-center fw-medium"><%# Eval("LastName") %></td>
+                                                    <td class="text-center text-muted">
+                                                        <small><%# Eval("Birthdate", "{0:dd/MM/yyyy}") %></small>
+                                                    </td>
                                                     <td class="text-center">
                                                         <span class="badge <%# (bool)Eval("Active") ? "bg-light text-dark border" : "bg-secondary text-light" %>">
                                                             <%# Eval("Email") %>
@@ -64,21 +70,21 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="btn-group" role="group">
-                                                            <asp:Button ID="btnModify" runat="server" 
-                                                                Text="Modificar" 
+                                                            <asp:Button ID="btnModify" runat="server"
+                                                                Text="Modificar"
                                                                 CssClass="btn btn-warning btn-sm me-1"
                                                                 CommandName="ModifyUser"
                                                                 CommandArgument='<%# Eval("Id") %>'
                                                                 Enabled='<%# (bool)Eval("Active") %>'
                                                                 OnClientClick="return confirm('¿Deseas modificar este usuario?');" />
-                                                            <asp:Button ID="btnToggle" runat="server" 
-                                                                Text='<%# (bool)Eval("Active") ? "Deshabilitar" : "Habilitar" %>' 
+                                                            <asp:Button ID="btnToggle" runat="server"
+                                                                Text='<%# (bool)Eval("Active") ? "Deshabilitar" : "Habilitar" %>'
                                                                 CssClass='<%# (bool)Eval("Active") ? "btn btn-secondary btn-sm me-1" : "btn btn-success btn-sm me-1" %>'
                                                                 CommandName='<%# (bool)Eval("Active") ? "DisableUser" : "EnableUser" %>'
                                                                 CommandArgument='<%# Eval("Id") %>'
                                                                 OnClientClick="return confirm('¿Estás seguro de realizar esta acción?');" />
-                                                            <asp:Button ID="btnDelete" runat="server" 
-                                                                Text="Eliminar" 
+                                                            <asp:Button ID="btnDelete" runat="server"
+                                                                Text="Eliminar"
                                                                 CssClass="btn btn-danger btn-sm"
                                                                 CommandName="DeleteUser"
                                                                 CommandArgument='<%# Eval("Id") %>'
@@ -102,8 +108,7 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Mensajes de alerta -->
+
                     <div class="mt-3">
                         <asp:Label CssClass="alert alert-success d-block" Visible="false" ID="SuccessMessage" runat="server">
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -117,17 +122,15 @@
         </div>
     </div>
 
-    <!-- Script mínimo para auto-ocultar alertas -->
     <script>
-        // Auto-ocultar alertas después de 5 segundos
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const alerts = document.querySelectorAll('.alert');
-            alerts.forEach(function(alert) {
-                setTimeout(function() {
+            alerts.forEach(function (alert) {
+                setTimeout(function () {
                     if (alert.style.display !== 'none') {
                         alert.style.transition = 'opacity 0.5s';
                         alert.style.opacity = '0';
-                        setTimeout(function() {
+                        setTimeout(function () {
                             alert.style.display = 'none';
                         }, 500);
                     }

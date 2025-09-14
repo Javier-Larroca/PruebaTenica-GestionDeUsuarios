@@ -8,7 +8,6 @@ namespace UserInterfaces
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Cargar información del usuario logueado si existe
             LoadUserInfo();
         }
 
@@ -42,15 +41,12 @@ namespace UserInterfaces
 
         protected void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            // Limpiar la sesión
             Session.Clear();
             Session.Abandon();
             
-            // Redirigir al login
             Response.Redirect("~/Login.aspx");
         }
 
-        // Método público para mostrar/ocultar el navbar
         public void ShowNavbar(bool show)
         {
             mainNavbar.Visible = show;

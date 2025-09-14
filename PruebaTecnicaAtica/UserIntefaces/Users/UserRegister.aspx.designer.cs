@@ -96,15 +96,6 @@ namespace UserInterfaces.Users
         protected global::System.Web.UI.WebControls.Button createUser;
 
         /// <summary>
-        /// SuccessUser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label SuccessUser;
-
-        /// <summary>
         /// Warning control.
         /// </summary>
         /// <remarks>

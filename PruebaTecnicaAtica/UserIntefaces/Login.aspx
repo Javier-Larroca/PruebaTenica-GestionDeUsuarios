@@ -10,15 +10,17 @@
                     <h5 class="text-dark text-decoration-underline mb-4">Gestión de usuarios</h5>
 
                     <!-- Avatar con iniciales -->
-                    <div class="bg-gradient bg-dark rounded-3 d-inline-flex align-items-center justify-content-center"
-                        style="width: 120px; height: 120px; background: linear-gradient(180deg, #6c757d 0%, #000000 100%);">
-                        <div class="text-white fw-bold" style="font-size: 2rem;">
-                            <div class="d-flex">
-                                <span class="me-2">J</span>
-                                <span>L</span>
+                    <a href="https://www.javierlarroca.com.ar" target="_blank">
+                        <div class="bg-gradient bg-dark rounded-3 d-inline-flex align-items-center justify-content-center"
+                            style="width: 120px; height: 120px; background: linear-gradient(180deg, #6c757d 0%, #000000 100%);">
+                            <div class="text-white fw-bold" style="font-size: 2rem;">
+                                <div class="d-flex">
+                                    <span class="me-2">J</span>
+                                    <span>L</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
@@ -55,14 +57,14 @@
                                     runat="server" Enabled="false" />
                             </div>
 
-<%--                            <!-- Enlace Olvidé mi contraseña -->
+                            <%--                            <!-- Enlace Olvidé mi contraseña -->
                             <div class="mb-4 text-center">
                                 <a href="#" class="text-primary text-decoration-none">¿Olvidaste tu contraseña?</a>
                             </div>--%>
 
                             <!-- Botón Crear cuenta nueva -->
                             <div class="mb-3">
-                                <asp:Button ID="Register" class="btn btn-success w-100 py-2" 
+                                <asp:Button ID="Register" class="btn btn-success w-100 py-2"
                                     OnClick="Register_Click" Text="Crear cuenta nueva" runat="server" />
                             </div>
 

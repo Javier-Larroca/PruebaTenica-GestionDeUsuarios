@@ -17,22 +17,9 @@ namespace DataAccessLayer
             this.command = new SqlCommand();
         }
 
-        public void setQuery(string consulta)
-        {
-            this.command.CommandType = CommandType.Text;
-            this.command.CommandText = consulta;
-        }
-
         public void addParameter(string nombre, object valor)
         {
             this.command.Parameters.AddWithValue(nombre, valor);
-        }
-
-        public void executeReader()
-        {
-            this.command.Connection = this.conection;
-            this.conection.Open();
-            this.reader = this.command.ExecuteReader();
         }
 
         public void closeConnection()
@@ -47,13 +34,6 @@ namespace DataAccessLayer
         public SqlDataReader Reader
         {
             get { return this.reader; }
-        }
-
-        internal void executeAction()
-        {
-            this.command.Connection = this.conection;
-            this.conection.Open();
-            this.command.ExecuteNonQuery();
         }
 
         public void setStoredProcedure(string storedPocedure)

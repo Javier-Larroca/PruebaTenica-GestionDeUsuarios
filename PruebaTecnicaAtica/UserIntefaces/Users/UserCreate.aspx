@@ -3,9 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container-fluid vh-100 bg-light">
 
-        <!-- Contenido principal -->
         <div class="row h-100 justify-content-center">
-            <!-- Sección del formulario (centrada) -->
             <div class="col-md-10 col-lg-8 col-xl-6 d-flex justify-content-center align-items-start bg-light pt-4">
                 <div class="w-100">
                     <div class="card shadow-lg border-0">
