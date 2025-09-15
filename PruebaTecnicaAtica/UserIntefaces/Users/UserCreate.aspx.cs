@@ -14,8 +14,7 @@ namespace UserInterfaces.Users
 
             if (Session["LoggedUser"] == null)
             {
-                // Usuario no logueado → redirigir al login
-                Response.Redirect("~/Users/UserLogin.aspx");
+                Response.Redirect("~/Login.aspx");
             }
 
             SuccessUser.Text = "Se agregó correctamente el usuario. Se le enviará un email con su contraseña.";

@@ -42,11 +42,11 @@ namespace DataAccessLayer
             {
                 connection.setStoredProcedure("sp_InsertUsers");
                 connection.addParameter("@Email", user.Email);
-                connection.addParameter("@FirstName", user.FirstName);
-                connection.addParameter("@LastName", user.LastName);
                 connection.addParameter("@Birthdate", user.Birthdate);
                 connection.addParameter("@PasswordHash", user.PasswordHash);
                 connection.addParameter("@PasswordSalt", user.PasswordSalt);
+                connection.addParameter("@FirstName", user.FirstName);
+                connection.addParameter("@LastName", user.LastName);
                 connection.executeStoredProcedure();
                 connection.cleanParameters();
                 return true;

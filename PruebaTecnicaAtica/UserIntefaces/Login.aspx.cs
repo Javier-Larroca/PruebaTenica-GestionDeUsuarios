@@ -9,8 +9,6 @@ namespace UserInterfaces
         {
             ErrorActive.Visible = false;
             ErrorLogueo.Visible = false;
-            Session.Clear();
-            Session.Abandon();
         }
 
         protected void Ingresar_Click(object sender, EventArgs e)
