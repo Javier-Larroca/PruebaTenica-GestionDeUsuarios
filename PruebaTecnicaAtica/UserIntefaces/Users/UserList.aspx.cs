@@ -16,6 +16,12 @@ namespace UserInterfaces.Users
             SiteMaster master = (SiteMaster)this.Master;
             master.ShowNavbar(true);
 
+            if (Session["LoggedUser"] == null)
+            {
+                // Usuario no logueado → redirigir al login
+                Response.Redirect("~/Users/UserLogin.aspx");
+            }
+
             if (!IsPostBack)
             {
                 LoadUsers();

@@ -12,8 +12,14 @@ namespace UserInterfaces.Users
             SiteMaster master = (SiteMaster)this.Master;
             master.ShowNavbar(true);
 
-            SuccessUser.Text = "Se agrego correctamente el usuario. Se le enviara un email con su contraseña.";
-            FailUser.Text = "ATENCION: No se pudo cargar el usuario ";
+            if (Session["LoggedUser"] == null)
+            {
+                // Usuario no logueado → redirigir al login
+                Response.Redirect("~/Users/UserLogin.aspx");
+            }
+
+            SuccessUser.Text = "Se agregó correctamente el usuario. Se le enviará un email con su contraseña.";
+            FailUser.Text = "ATENCIÓN: No se pudo cargar el usuario.";
 
             if (!IsPostBack)
             {
@@ -48,24 +54,17 @@ namespace UserInterfaces.Users
                 return;
             }
 
+            if (!IsValidBirthDate())
+            {
+                Warning.Text = "Debe seleccionar una fecha de nacimiento válida.";
+                Warning.Visible = true;
+                return;
+            }
+
             User newUser = new User();
             try
             {
-                int day, month, year;
-
-                if (int.TryParse(dayBirth.SelectedValue, out day) &&
-                    int.TryParse(monthBirth.SelectedValue, out month) &&
-                    int.TryParse(yearBirth.SelectedValue, out year))
-                {
-                    newUser.Birthdate = new DateTime(year, month, day);
-                }
-                else
-                {
-                    Warning.Text = "Debe seleccionar una fecha de nacimiento válida.";
-                    Warning.Visible = true;
-                    return;
-                }
-
+                newUser.Birthdate = GetSelectedBirthDate();
                 newUser.FirstName = firstName.Text.Trim();
                 newUser.LastName = lastName.Text.Trim();
                 newUser.Email = email.Text.Trim();
@@ -73,9 +72,13 @@ namespace UserInterfaces.Users
                 if (UserBLL.CreateManualUser(newUser))
                 {
                     SuccessUser.Visible = true;
+
                     firstName.Text = "";
                     lastName.Text = "";
                     email.Text = "";
+                    dayBirth.SelectedIndex = 0;
+                    monthBirth.SelectedIndex = 0;
+                    yearBirth.SelectedIndex = 0;
                 }
                 else
                 {
@@ -84,11 +87,24 @@ namespace UserInterfaces.Users
             }
             catch (Exception ex)
             {
-                FailUser.Text = "ATENCIÓN: Ocurrio un error al registrar el ususario. ";
+                FailUser.Text = "ATENCIÓN: Ocurrió un error al registrar el usuario.";
                 FailUser.Visible = true;
                 Warning.Text = ex.Message;
                 Warning.Visible = true;
             }
+        }
+
+        private bool IsValidBirthDate()
+        {
+            return dayBirth.SelectedIndex > 0 && monthBirth.SelectedIndex > 0 && yearBirth.SelectedIndex > 0;
+        }
+
+        private DateTime GetSelectedBirthDate()
+        {
+            int day = int.Parse(dayBirth.SelectedValue);
+            int month = int.Parse(monthBirth.SelectedValue);
+            int year = int.Parse(yearBirth.SelectedValue);
+            return new DateTime(year, month, day);
         }
 
         private void LoadBirthDateControls()
@@ -103,7 +119,7 @@ namespace UserInterfaces.Users
             monthBirth.Items.Clear();
             monthBirth.Items.Add(new ListItem("Mes", ""));
             string[] months = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+                                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
             for (int i = 0; i < months.Length; i++)
             {
                 monthBirth.Items.Add(new ListItem(months[i], (i + 1).ToString()));
@@ -117,6 +133,5 @@ namespace UserInterfaces.Users
                 yearBirth.Items.Add(new ListItem(i.ToString(), i.ToString()));
             }
         }
-
     }
 }

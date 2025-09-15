@@ -6,26 +6,21 @@ namespace UserInterfaces.Users
 {
     public partial class UserModify : System.Web.UI.Page
     {
-        private User userToModify;
-        
         private int UserId
         {
-            get
-            {
-                if (ViewState["UserId"] != null)
-                    return (int)ViewState["UserId"];
-                return 0;
-            }
-            set
-            {
-                ViewState["UserId"] = value;
-            }
+            get { return ViewState["UserId"] != null ? (int)ViewState["UserId"] : 0; }
+            set { ViewState["UserId"] = value; }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             SiteMaster master = (SiteMaster)this.Master;
             master.ShowNavbar(true);
+
+            if (Session["LoggedUser"] == null)
+            {
+                Response.Redirect("~/Users/UserLogin.aspx");
+            }
 
             if (!IsPostBack)
             {
@@ -45,17 +40,19 @@ namespace UserInterfaces.Users
         {
             try
             {
-                userToModify = UserBLL.GetUserById(UserId);
-                
+                User userToModify = UserBLL.GetUserById(UserId);
+
                 if (userToModify != null)
                 {
                     firstName.Text = userToModify.FirstName;
                     lastName.Text = userToModify.LastName;
                     email.Text = userToModify.Email;
+
                     LoadBirthDateControls();
                     dayBirth.SelectedValue = userToModify.Birthdate.Day.ToString();
                     monthBirth.SelectedValue = userToModify.Birthdate.Month.ToString();
                     yearBirth.SelectedValue = userToModify.Birthdate.Year.ToString();
+
                     ddlActive.SelectedValue = userToModify.Active.ToString().ToLower();
                 }
                 else
@@ -71,63 +68,35 @@ namespace UserInterfaces.Users
             }
         }
 
-        private void LoadBirthDateControls()
-        {
-            dayBirth.Items.Clear();
-            dayBirth.Items.Add(new System.Web.UI.WebControls.ListItem("Día", ""));
-            for (int i = 1; i <= 31; i++)
-            {
-                dayBirth.Items.Add(new System.Web.UI.WebControls.ListItem(i.ToString(), i.ToString()));
-            }
-
-            monthBirth.Items.Clear();
-            monthBirth.Items.Add(new System.Web.UI.WebControls.ListItem("Mes", ""));
-            string[] months = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
-                              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
-            for (int i = 0; i < months.Length; i++)
-            {
-                monthBirth.Items.Add(new System.Web.UI.WebControls.ListItem(months[i], (i + 1).ToString()));
-            }
-
-            yearBirth.Items.Clear();
-            yearBirth.Items.Add(new System.Web.UI.WebControls.ListItem("Año", ""));
-            int currentYear = DateTime.Now.Year;
-            for (int i = currentYear; i >= 1900; i--)
-            {
-                yearBirth.Items.Add(new System.Web.UI.WebControls.ListItem(i.ToString(), i.ToString()));
-            }
-        }
-
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
+            Warning.Visible = false;
+            SuccessUser.Visible = false;
+            FailUser.Visible = false;
+
+            if (string.IsNullOrWhiteSpace(firstName.Text))
+            {
+                ShowMessage("El nombre es obligatorio.", "warning");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(lastName.Text))
+            {
+                ShowMessage("El apellido es obligatorio.", "warning");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(email.Text))
+            {
+                ShowMessage("El email es obligatorio.", "warning");
+                return;
+            }
+            if (!IsValidBirthDate())
+            {
+                ShowMessage("Debe seleccionar una fecha de nacimiento válida.", "warning");
+                return;
+            }
+
             try
             {
-                // Validar que todos los campos requeridos estén llenos
-                if (string.IsNullOrWhiteSpace(firstName.Text) || 
-                    string.IsNullOrWhiteSpace(lastName.Text) || 
-                    string.IsNullOrWhiteSpace(email.Text))
-                {
-                    ShowMessage("Por favor, complete todos los campos obligatorios.", "warning");
-                    return;
-                }
-
-                // Validar fecha de nacimiento
-                if (!IsValidBirthDate())
-                {
-                    ShowMessage("Por favor, seleccione una fecha de nacimiento válida.", "warning");
-                    return;
-                }
-
-                // Obtener el usuario original para preservar datos importantes
-                User originalUser = UserBLL.GetUserById(UserId);
-                if (originalUser == null)
-                {
-                    ShowMessage("Usuario no encontrado.", "error");
-                    Response.Redirect("UserList.aspx");
-                    return;
-                }
-
-                // Crear objeto usuario con los datos actualizados
                 User updatedUser = new User
                 {
                     Id = UserId,
@@ -135,16 +104,14 @@ namespace UserInterfaces.Users
                     LastName = lastName.Text.Trim(),
                     Email = email.Text.Trim(),
                     Birthdate = GetSelectedBirthDate(),
-                    Active = bool.Parse(ddlActive.SelectedValue),
+                    Active = bool.Parse(ddlActive.SelectedValue)
                 };
 
-                // Actualizar el usuario
                 bool result = UserBLL.UpdateUser(updatedUser);
 
                 if (result)
                 {
                     ShowMessage("Usuario actualizado correctamente.", "success");
-                    // Redirigir a la lista después de un breve delay
                     Response.AddHeader("REFRESH", "2;URL=UserList.aspx");
                 }
                 else
@@ -154,7 +121,10 @@ namespace UserInterfaces.Users
             }
             catch (Exception ex)
             {
-                ShowMessage($"Error al actualizar el usuario: {ex.Message}", "error");
+                FailUser.Text = "ATENCIÓN: Ocurrió un error al registrar el usuario.";
+                FailUser.Visible = true;
+                Warning.Text = ex.Message;
+                Warning.Visible = true;
             }
         }
 
@@ -165,9 +135,7 @@ namespace UserInterfaces.Users
 
         private bool IsValidBirthDate()
         {
-            return dayBirth.SelectedIndex > 0 && 
-                   monthBirth.SelectedIndex > 0 && 
-                   yearBirth.SelectedIndex > 0;
+            return dayBirth.SelectedIndex > 0 && monthBirth.SelectedIndex > 0 && yearBirth.SelectedIndex > 0;
         }
 
         private DateTime GetSelectedBirthDate()
@@ -175,8 +143,27 @@ namespace UserInterfaces.Users
             int day = int.Parse(dayBirth.SelectedValue);
             int month = int.Parse(monthBirth.SelectedValue);
             int year = int.Parse(yearBirth.SelectedValue);
-            
             return new DateTime(year, month, day);
+        }
+
+        private void LoadBirthDateControls()
+        {
+            dayBirth.Items.Clear();
+            dayBirth.Items.Add(new System.Web.UI.WebControls.ListItem("Día", ""));
+            for (int i = 1; i <= 31; i++)
+                dayBirth.Items.Add(new System.Web.UI.WebControls.ListItem(i.ToString(), i.ToString()));
+
+            monthBirth.Items.Clear();
+            monthBirth.Items.Add(new System.Web.UI.WebControls.ListItem("Mes", ""));
+            string[] months = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+            for (int i = 0; i < months.Length; i++)
+                monthBirth.Items.Add(new System.Web.UI.WebControls.ListItem(months[i], (i + 1).ToString()));
+
+            yearBirth.Items.Clear();
+            yearBirth.Items.Add(new System.Web.UI.WebControls.ListItem("Año", ""));
+            int currentYear = DateTime.Now.Year;
+            for (int i = currentYear; i >= 1900; i--)
+                yearBirth.Items.Add(new System.Web.UI.WebControls.ListItem(i.ToString(), i.ToString()));
         }
 
         private void ShowMessage(string message, string type)
@@ -186,20 +173,14 @@ namespace UserInterfaces.Users
                 case "success":
                     SuccessUser.Text = message;
                     SuccessUser.Visible = true;
-                    Warning.Visible = false;
-                    FailUser.Visible = false;
                     break;
                 case "warning":
                     Warning.Text = message;
                     Warning.Visible = true;
-                    SuccessUser.Visible = false;
-                    FailUser.Visible = false;
                     break;
                 case "error":
                     FailUser.Text = message;
                     FailUser.Visible = true;
-                    SuccessUser.Visible = false;
-                    Warning.Visible = false;
                     break;
             }
         }

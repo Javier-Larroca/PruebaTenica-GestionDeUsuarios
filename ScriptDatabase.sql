@@ -53,8 +53,19 @@ CREATE PROCEDURE sp_InsertUsers
 AS
 BEGIN
     SET NOCOUNT ON;
+
+    -- Validar si ya existe un usuario con el mismo Email
+    IF EXISTS (SELECT 1 FROM Users WHERE Email = @Email)
+    BEGIN
+        -- Devolver error con THROW (recomendado)
+        THROW 50001, 'El email ya se encuentra registrado en el sistema.', 1;
+        RETURN;
+    END
+
+    -- Si no existe, se inserta
     INSERT INTO Users (Email, Birthdate, PasswordHash, PasswordSalt, FirstName, LastName)
     VALUES (@Email, @Birthdate, @PasswordHash, @PasswordSalt, @FirstName, @LastName);
+
     SELECT SCOPE_IDENTITY() AS NewUserId;
 END
 GO

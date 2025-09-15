@@ -41,7 +41,13 @@ namespace UserInterfaces.Users
             }
             if (txtPassword.Text == string.Empty || txtPassword.Text != txtPasswordConfirm.Text)
             {
-                Warning.Text = "No hay coincidencia en las contraseñas ";
+                Warning.Text = "No hay coincidencia en las contraseñas.";
+                Warning.Visible = true;
+                return;
+            }
+            if (!IsValidBirthDate())
+            {
+                Warning.Text = "Debe seleccionar una fecha de nacimiento válida.";
                 Warning.Visible = true;
                 return;
             }
@@ -49,21 +55,7 @@ namespace UserInterfaces.Users
             User newUser = new User();
             try
             {
-                int day, month, year;
-
-                if (int.TryParse(dayBirth.SelectedValue, out day) &&
-                    int.TryParse(monthBirth.SelectedValue, out month) &&
-                    int.TryParse(yearBirth.SelectedValue, out year))
-                {
-                    newUser.Birthdate = new DateTime(year, month, day);
-                }
-                else
-                {
-                    Warning.Text = "Debe seleccionar una fecha de nacimiento válida.";
-                    Warning.Visible = true;
-                    return;
-                }
-
+                newUser.Birthdate = GetSelectedBirthDate();
                 newUser.FirstName = firstName.Text.Trim();
                 newUser.LastName = lastName.Text.Trim();
                 newUser.Email = email.Text.Trim();
@@ -85,6 +77,19 @@ namespace UserInterfaces.Users
                 Warning.Text = ex.Message;
                 Warning.Visible = true;
             }
+        }
+
+        private bool IsValidBirthDate()
+        {
+            return dayBirth.SelectedIndex > 0 && monthBirth.SelectedIndex > 0 && yearBirth.SelectedIndex > 0;
+        }
+
+        private DateTime GetSelectedBirthDate()
+        {
+            int day = int.Parse(dayBirth.SelectedValue);
+            int month = int.Parse(monthBirth.SelectedValue);
+            int year = int.Parse(yearBirth.SelectedValue);
+            return new DateTime(year, month, day);
         }
 
         private void LoadBirthDateControls()

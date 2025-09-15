@@ -24,12 +24,11 @@
                 </div>
             </div>
 
-            <!-- Sección del formulario (derecha) -->
             <div class="col-md-6 d-flex justify-content-center align-items-center bg-light">
                 <div class="card shadow-lg border-0" style="width: 400px; min-height: 500px;">
                     <div class="card-body p-5">
                         <form id="loginForm">
-                            <!-- Campo Email -->
+
                             <div class="mb-4">
                                 <label for="Email" class="form-label">Email</label>
                                 <asp:TextBox CssClass="form-control" ID="email" runat="server"
@@ -37,7 +36,6 @@
                                     onkeyup="validateForm()"></asp:TextBox>
                             </div>
 
-                            <!-- Campo Contraseña -->
                             <div class="mb-4">
                                 <label for="Password" class="form-label">Contraseña</label>
                                 <div class="input-group">
@@ -50,28 +48,20 @@
                                 </div>
                             </div>
 
-                            <!-- Botón Iniciar Sesión -->
                             <div class="mb-3">
                                 <asp:Button ID="Ingresar" CssClass="btn btn-primary w-100 py-2"
                                     OnClick="Ingresar_Click" Text="Iniciar sesión"
                                     runat="server" Enabled="false" />
                             </div>
 
-                            <%--                            <!-- Enlace Olvidé mi contraseña -->
-                            <div class="mb-4 text-center">
-                                <a href="#" class="text-primary text-decoration-none">¿Olvidaste tu contraseña?</a>
-                            </div>--%>
-
-                            <!-- Botón Crear cuenta nueva -->
                             <div class="mb-3">
                                 <asp:Button ID="Register" class="btn btn-success w-100 py-2"
                                     OnClick="Register_Click" Text="Crear cuenta nueva" runat="server" />
                             </div>
 
-                            <!-- Mensaje de error -->
                             <div class="mt-5 text-center">
                                 <asp:Label CssClass="alert alert-danger d-inline-block" ID="ErrorLogueo"
-                                    Text="Usuario y/o contraseña ingersado incorecto" runat="server" Visible="false"></asp:Label>
+                                    Text="Usuario y/o contraseña ingsado incorecto" runat="server" Visible="false"></asp:Label>
                             </div>
                             <div class="mt-5 text-center">
                                 <asp:Label CssClass="alert alert-danger d-inline-block" ID="ErrorActive"
