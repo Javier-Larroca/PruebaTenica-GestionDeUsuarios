@@ -123,7 +123,20 @@ CREATE PROCEDURE sp_UpdateUser
 AS
 BEGIN
     SET NOCOUNT ON;
-    UPDATE Users SET Email = @Email, Birthdate = @Birthdate, Active = @Active, FirstName = @FirstName, LastName = @LastName WHERE Id = @Id;
+
+    IF EXISTS (SELECT 1 FROM Users WHERE Email = @Email AND Id <> @Id)
+    BEGIN
+        THROW 50002, 'El email ya está siendo utilizado por otro usuario.', 1;
+        RETURN;
+    END
+
+    UPDATE Users
+    SET Email = @Email,
+        Birthdate = @Birthdate,
+        Active = @Active,
+        FirstName = @FirstName,
+        LastName = @LastName
+    WHERE Id = @Id;
 END
 GO
 
